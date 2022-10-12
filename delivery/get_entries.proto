@@ -1,0 +1,20 @@
+syntax = "proto3";
+package delivery;
+
+message GetEntriesRequest {
+	string type = 1;
+	string tenant_id = 2;
+	string id = 3;
+	int32 limit = 4;
+	int32 page = 5;
+}
+
+message Entry {
+	map<string, string> data = 1;
+}
+
+message GetEntriesResponse {
+	repeated Entry result = 1;
+	int32 limit = 2;
+	int32 page = 3;
+}

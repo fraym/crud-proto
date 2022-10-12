@@ -1,0 +1,11 @@
+syntax = "proto3";
+package delivery;
+
+message CreateEntryRequest {
+	string type = 1;
+	map<string, string> data = 2;
+}
+
+message CreateEntryResponse {
+	string id = 1;
+}

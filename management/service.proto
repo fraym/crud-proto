@@ -1,0 +1,13 @@
+syntax = "proto3";
+package management;
+import "management/create_types.proto";
+import "management/update_types.proto";
+import "management/remove_types.proto";
+import "management/get_types.proto";
+  
+service Service {
+	rpc CreateTypes(CreateTypesRequest) returns (CreateTypesResponse);
+	rpc UpdateTypes(UpdateTypesRequest) returns (UpdateTypesResponse);
+	rpc RemoveTypes(RemoveTypesRequest) returns (RemoveTypesResponse);
+	rpc GetTypes(GetTypesRequest) returns (GetTypesResponse);
+}
