@@ -1,3 +1,7 @@
+# v1.0.0-alpha.3
+
+- (bc) Update org name
+
 # v1.0.0-alpha.2
 
 - (feature) Add generated go code

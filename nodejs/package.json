@@ -2,10 +2,10 @@
     "name": "@fraym/crud-proto",
     "version": "1.0.0-alpha.2",
     "license": "UNLICENSED",
-    "homepage": "https://github.com/fraym-work/crud-proto",
+    "homepage": "https://github.com/fraym/crud-proto",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/fraym-work/crud-proto.git"
+        "url": "git+https://github.com/fraym/crud-proto.git"
     },
     "description": "nodejs generated protobuf code for our crud service",
     "scripts": {

@@ -7,7 +7,7 @@ This repository contains all protocol buffers for the gRPC api of the crud servi
 ### Install go package
 
 ```bash
-go get -u github.com/fraym-work/crud-proto/go
+go get -u github.com/fraym/crud-proto/go
 ```
 
 ### Install nodejs package
