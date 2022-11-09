@@ -7,8 +7,8 @@ import "delivery/delete_entry.proto";
   
 service Service {
 	rpc GetEntries(GetEntriesRequest) returns (GetEntriesResponse);
-	rpc CreateData(CreateEntryRequest) returns (CreateEntryResponse);
-	rpc UpdateData(UpdateEntryRequest) returns (UpdateEntryResponse);
-	rpc DeleteData(DeleteEntryRequest) returns (DeleteEntryResponse);
+	rpc CreateEntry(CreateEntryRequest) returns (CreateEntryResponse);
+	rpc UpdateEntry(UpdateEntryRequest) returns (UpdateEntryResponse);
+	rpc DeleteEntry(DeleteEntryRequest) returns (DeleteEntryResponse);
 }
  

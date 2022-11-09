@@ -1,3 +1,7 @@
+# v1.0.0-alpha.4
+
+- (bc) Fix service function names
+
 # v1.0.0-alpha.3
 
 - (bc) Update org name

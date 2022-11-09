@@ -29,8 +29,8 @@ export const ServiceService = {
     responseSerialize: (value: GetEntriesResponse) => Buffer.from(GetEntriesResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => GetEntriesResponse.decode(value),
   },
-  createData: {
-    path: "/delivery.Service/CreateData",
+  createEntry: {
+    path: "/delivery.Service/CreateEntry",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: CreateEntryRequest) => Buffer.from(CreateEntryRequest.encode(value).finish()),
@@ -38,8 +38,8 @@ export const ServiceService = {
     responseSerialize: (value: CreateEntryResponse) => Buffer.from(CreateEntryResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => CreateEntryResponse.decode(value),
   },
-  updateData: {
-    path: "/delivery.Service/UpdateData",
+  updateEntry: {
+    path: "/delivery.Service/UpdateEntry",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: UpdateEntryRequest) => Buffer.from(UpdateEntryRequest.encode(value).finish()),
@@ -47,8 +47,8 @@ export const ServiceService = {
     responseSerialize: (value: UpdateEntryResponse) => Buffer.from(UpdateEntryResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => UpdateEntryResponse.decode(value),
   },
-  deleteData: {
-    path: "/delivery.Service/DeleteData",
+  deleteEntry: {
+    path: "/delivery.Service/DeleteEntry",
     requestStream: false,
     responseStream: false,
     requestSerialize: (value: DeleteEntryRequest) => Buffer.from(DeleteEntryRequest.encode(value).finish()),
@@ -60,9 +60,9 @@ export const ServiceService = {
 
 export interface ServiceServer extends UntypedServiceImplementation {
   getEntries: handleUnaryCall<GetEntriesRequest, GetEntriesResponse>;
-  createData: handleUnaryCall<CreateEntryRequest, CreateEntryResponse>;
-  updateData: handleUnaryCall<UpdateEntryRequest, UpdateEntryResponse>;
-  deleteData: handleUnaryCall<DeleteEntryRequest, DeleteEntryResponse>;
+  createEntry: handleUnaryCall<CreateEntryRequest, CreateEntryResponse>;
+  updateEntry: handleUnaryCall<UpdateEntryRequest, UpdateEntryResponse>;
+  deleteEntry: handleUnaryCall<DeleteEntryRequest, DeleteEntryResponse>;
 }
 
 export interface ServiceClient extends Client {
@@ -81,46 +81,46 @@ export interface ServiceClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: GetEntriesResponse) => void,
   ): ClientUnaryCall;
-  createData(
+  createEntry(
     request: CreateEntryRequest,
     callback: (error: ServiceError | null, response: CreateEntryResponse) => void,
   ): ClientUnaryCall;
-  createData(
+  createEntry(
     request: CreateEntryRequest,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: CreateEntryResponse) => void,
   ): ClientUnaryCall;
-  createData(
+  createEntry(
     request: CreateEntryRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: CreateEntryResponse) => void,
   ): ClientUnaryCall;
-  updateData(
+  updateEntry(
     request: UpdateEntryRequest,
     callback: (error: ServiceError | null, response: UpdateEntryResponse) => void,
   ): ClientUnaryCall;
-  updateData(
+  updateEntry(
     request: UpdateEntryRequest,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: UpdateEntryResponse) => void,
   ): ClientUnaryCall;
-  updateData(
+  updateEntry(
     request: UpdateEntryRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: UpdateEntryResponse) => void,
   ): ClientUnaryCall;
-  deleteData(
+  deleteEntry(
     request: DeleteEntryRequest,
     callback: (error: ServiceError | null, response: DeleteEntryResponse) => void,
   ): ClientUnaryCall;
-  deleteData(
+  deleteEntry(
     request: DeleteEntryRequest,
     metadata: Metadata,
     callback: (error: ServiceError | null, response: DeleteEntryResponse) => void,
   ): ClientUnaryCall;
-  deleteData(
+  deleteEntry(
     request: DeleteEntryRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
