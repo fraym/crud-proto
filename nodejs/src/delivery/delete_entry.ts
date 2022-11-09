@@ -5,6 +5,7 @@ export const protobufPackage = "delivery";
 
 export interface DeleteEntryRequest {
   type: string;
+  tenantId: string;
   id: string;
 }
 
@@ -12,7 +13,7 @@ export interface DeleteEntryResponse {
 }
 
 function createBaseDeleteEntryRequest(): DeleteEntryRequest {
-  return { type: "", id: "" };
+  return { type: "", tenantId: "", id: "" };
 }
 
 export const DeleteEntryRequest = {
@@ -20,8 +21,11 @@ export const DeleteEntryRequest = {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
+    if (message.tenantId !== "") {
+      writer.uint32(18).string(message.tenantId);
+    }
     if (message.id !== "") {
-      writer.uint32(18).string(message.id);
+      writer.uint32(26).string(message.id);
     }
     return writer;
   },
@@ -37,6 +41,9 @@ export const DeleteEntryRequest = {
           message.type = reader.string();
           break;
         case 2:
+          message.tenantId = reader.string();
+          break;
+        case 3:
           message.id = reader.string();
           break;
         default:
@@ -48,12 +55,17 @@ export const DeleteEntryRequest = {
   },
 
   fromJSON(object: any): DeleteEntryRequest {
-    return { type: isSet(object.type) ? String(object.type) : "", id: isSet(object.id) ? String(object.id) : "" };
+    return {
+      type: isSet(object.type) ? String(object.type) : "",
+      tenantId: isSet(object.tenantId) ? String(object.tenantId) : "",
+      id: isSet(object.id) ? String(object.id) : "",
+    };
   },
 
   toJSON(message: DeleteEntryRequest): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
+    message.tenantId !== undefined && (obj.tenantId = message.tenantId);
     message.id !== undefined && (obj.id = message.id);
     return obj;
   },
@@ -61,6 +73,7 @@ export const DeleteEntryRequest = {
   fromPartial<I extends Exact<DeepPartial<DeleteEntryRequest>, I>>(object: I): DeleteEntryRequest {
     const message = createBaseDeleteEntryRequest();
     message.type = object.type ?? "";
+    message.tenantId = object.tenantId ?? "";
     message.id = object.id ?? "";
     return message;
   },

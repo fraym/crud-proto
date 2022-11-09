@@ -5,6 +5,7 @@ export const protobufPackage = "delivery";
 
 export interface UpdateEntryRequest {
   type: string;
+  tenantId: string;
   id: string;
   data: { [key: string]: string };
 }
@@ -18,7 +19,7 @@ export interface UpdateEntryResponse {
 }
 
 function createBaseUpdateEntryRequest(): UpdateEntryRequest {
-  return { type: "", id: "", data: {} };
+  return { type: "", tenantId: "", id: "", data: {} };
 }
 
 export const UpdateEntryRequest = {
@@ -26,11 +27,14 @@ export const UpdateEntryRequest = {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
+    if (message.tenantId !== "") {
+      writer.uint32(18).string(message.tenantId);
+    }
     if (message.id !== "") {
-      writer.uint32(18).string(message.id);
+      writer.uint32(26).string(message.id);
     }
     Object.entries(message.data).forEach(([key, value]) => {
-      UpdateEntryRequest_DataEntry.encode({ key: key as any, value }, writer.uint32(26).fork()).ldelim();
+      UpdateEntryRequest_DataEntry.encode({ key: key as any, value }, writer.uint32(34).fork()).ldelim();
     });
     return writer;
   },
@@ -46,12 +50,15 @@ export const UpdateEntryRequest = {
           message.type = reader.string();
           break;
         case 2:
-          message.id = reader.string();
+          message.tenantId = reader.string();
           break;
         case 3:
-          const entry3 = UpdateEntryRequest_DataEntry.decode(reader, reader.uint32());
-          if (entry3.value !== undefined) {
-            message.data[entry3.key] = entry3.value;
+          message.id = reader.string();
+          break;
+        case 4:
+          const entry4 = UpdateEntryRequest_DataEntry.decode(reader, reader.uint32());
+          if (entry4.value !== undefined) {
+            message.data[entry4.key] = entry4.value;
           }
           break;
         default:
@@ -65,6 +72,7 @@ export const UpdateEntryRequest = {
   fromJSON(object: any): UpdateEntryRequest {
     return {
       type: isSet(object.type) ? String(object.type) : "",
+      tenantId: isSet(object.tenantId) ? String(object.tenantId) : "",
       id: isSet(object.id) ? String(object.id) : "",
       data: isObject(object.data)
         ? Object.entries(object.data).reduce<{ [key: string]: string }>((acc, [key, value]) => {
@@ -78,6 +86,7 @@ export const UpdateEntryRequest = {
   toJSON(message: UpdateEntryRequest): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
+    message.tenantId !== undefined && (obj.tenantId = message.tenantId);
     message.id !== undefined && (obj.id = message.id);
     obj.data = {};
     if (message.data) {
@@ -91,6 +100,7 @@ export const UpdateEntryRequest = {
   fromPartial<I extends Exact<DeepPartial<UpdateEntryRequest>, I>>(object: I): UpdateEntryRequest {
     const message = createBaseUpdateEntryRequest();
     message.type = object.type ?? "";
+    message.tenantId = object.tenantId ?? "";
     message.id = object.id ?? "";
     message.data = Object.entries(object.data ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {

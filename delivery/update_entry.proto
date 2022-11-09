@@ -3,8 +3,9 @@ package delivery;
 
 message UpdateEntryRequest {
 	string type = 1;
-	string id = 2;
-	map<string, string> data = 3;
+	string tenant_id = 2;
+	string id = 3;
+	map<string, string> data = 4;
 }
 
 message UpdateEntryResponse {}

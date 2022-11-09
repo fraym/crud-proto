@@ -3,7 +3,8 @@ package delivery;
 
 message DeleteEntryRequest {
 	string type = 1;
-	string id = 2;
+	string tenant_id = 2;
+	string id = 3;
 }
 
 message DeleteEntryResponse {}

@@ -1,3 +1,7 @@
+# v1.0.0-alpha.5
+
+- (bug) Add tenant to all requests
+
 # v1.0.0-alpha.4
 
 - (bc) Fix service function names

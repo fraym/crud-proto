@@ -3,7 +3,8 @@ package delivery;
 
 message CreateEntryRequest {
 	string type = 1;
-	map<string, string> data = 2;
+	string tenant_id = 2;
+	map<string, string> data = 3;
 }
 
 message CreateEntryResponse {

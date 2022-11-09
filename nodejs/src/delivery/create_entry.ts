@@ -5,6 +5,7 @@ export const protobufPackage = "delivery";
 
 export interface CreateEntryRequest {
   type: string;
+  tenantId: string;
   data: { [key: string]: string };
 }
 
@@ -18,7 +19,7 @@ export interface CreateEntryResponse {
 }
 
 function createBaseCreateEntryRequest(): CreateEntryRequest {
-  return { type: "", data: {} };
+  return { type: "", tenantId: "", data: {} };
 }
 
 export const CreateEntryRequest = {
@@ -26,8 +27,11 @@ export const CreateEntryRequest = {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
+    if (message.tenantId !== "") {
+      writer.uint32(18).string(message.tenantId);
+    }
     Object.entries(message.data).forEach(([key, value]) => {
-      CreateEntryRequest_DataEntry.encode({ key: key as any, value }, writer.uint32(18).fork()).ldelim();
+      CreateEntryRequest_DataEntry.encode({ key: key as any, value }, writer.uint32(26).fork()).ldelim();
     });
     return writer;
   },
@@ -43,9 +47,12 @@ export const CreateEntryRequest = {
           message.type = reader.string();
           break;
         case 2:
-          const entry2 = CreateEntryRequest_DataEntry.decode(reader, reader.uint32());
-          if (entry2.value !== undefined) {
-            message.data[entry2.key] = entry2.value;
+          message.tenantId = reader.string();
+          break;
+        case 3:
+          const entry3 = CreateEntryRequest_DataEntry.decode(reader, reader.uint32());
+          if (entry3.value !== undefined) {
+            message.data[entry3.key] = entry3.value;
           }
           break;
         default:
@@ -59,6 +66,7 @@ export const CreateEntryRequest = {
   fromJSON(object: any): CreateEntryRequest {
     return {
       type: isSet(object.type) ? String(object.type) : "",
+      tenantId: isSet(object.tenantId) ? String(object.tenantId) : "",
       data: isObject(object.data)
         ? Object.entries(object.data).reduce<{ [key: string]: string }>((acc, [key, value]) => {
           acc[key] = String(value);
@@ -71,6 +79,7 @@ export const CreateEntryRequest = {
   toJSON(message: CreateEntryRequest): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
+    message.tenantId !== undefined && (obj.tenantId = message.tenantId);
     obj.data = {};
     if (message.data) {
       Object.entries(message.data).forEach(([k, v]) => {
@@ -83,6 +92,7 @@ export const CreateEntryRequest = {
   fromPartial<I extends Exact<DeepPartial<CreateEntryRequest>, I>>(object: I): CreateEntryRequest {
     const message = createBaseCreateEntryRequest();
     message.type = object.type ?? "";
+    message.tenantId = object.tenantId ?? "";
     message.data = Object.entries(object.data ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
         acc[key] = String(value);
