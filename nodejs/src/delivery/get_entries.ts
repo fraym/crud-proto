@@ -9,6 +9,7 @@ export interface GetEntriesRequest {
   id: string;
   limit: number;
   page: number;
+  returnEmptyDataIfNotFound: boolean;
 }
 
 export interface Entry {
@@ -27,7 +28,7 @@ export interface GetEntriesResponse {
 }
 
 function createBaseGetEntriesRequest(): GetEntriesRequest {
-  return { type: "", tenantId: "", id: "", limit: 0, page: 0 };
+  return { type: "", tenantId: "", id: "", limit: 0, page: 0, returnEmptyDataIfNotFound: false };
 }
 
 export const GetEntriesRequest = {
@@ -46,6 +47,9 @@ export const GetEntriesRequest = {
     }
     if (message.page !== 0) {
       writer.uint32(40).int32(message.page);
+    }
+    if (message.returnEmptyDataIfNotFound === true) {
+      writer.uint32(48).bool(message.returnEmptyDataIfNotFound);
     }
     return writer;
   },
@@ -72,6 +76,9 @@ export const GetEntriesRequest = {
         case 5:
           message.page = reader.int32();
           break;
+        case 6:
+          message.returnEmptyDataIfNotFound = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -87,6 +94,9 @@ export const GetEntriesRequest = {
       id: isSet(object.id) ? String(object.id) : "",
       limit: isSet(object.limit) ? Number(object.limit) : 0,
       page: isSet(object.page) ? Number(object.page) : 0,
+      returnEmptyDataIfNotFound: isSet(object.returnEmptyDataIfNotFound)
+        ? Boolean(object.returnEmptyDataIfNotFound)
+        : false,
     };
   },
 
@@ -97,6 +107,8 @@ export const GetEntriesRequest = {
     message.id !== undefined && (obj.id = message.id);
     message.limit !== undefined && (obj.limit = Math.round(message.limit));
     message.page !== undefined && (obj.page = Math.round(message.page));
+    message.returnEmptyDataIfNotFound !== undefined &&
+      (obj.returnEmptyDataIfNotFound = message.returnEmptyDataIfNotFound);
     return obj;
   },
 
@@ -107,6 +119,7 @@ export const GetEntriesRequest = {
     message.id = object.id ?? "";
     message.limit = object.limit ?? 0;
     message.page = object.page ?? 0;
+    message.returnEmptyDataIfNotFound = object.returnEmptyDataIfNotFound ?? false;
     return message;
   },
 };

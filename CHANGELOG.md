@@ -1,3 +1,7 @@
+# v1.0.0-alpha.6
+
+- (feature) Add `returnEmptyDataIfNotFound` to `GetEntriesRequest`
+
 # v1.0.0-alpha.5
 
 - (bug) Add tenant to all requests
