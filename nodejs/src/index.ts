@@ -6,11 +6,13 @@ export {
 
 export {
     DeepPartial,
-    Exact,
     Entry,
     Entry_DataEntry,
     GetEntriesRequest,
     GetEntriesResponse,
+    DataFilter,
+    DataFieldFilter,
+    DataFilter_FieldsEntry,
 } from "./delivery/get_entries";
 
 export {

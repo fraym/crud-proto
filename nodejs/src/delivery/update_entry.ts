@@ -97,7 +97,7 @@ export const UpdateEntryRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateEntryRequest>, I>>(object: I): UpdateEntryRequest {
+  fromPartial(object: DeepPartial<UpdateEntryRequest>): UpdateEntryRequest {
     const message = createBaseUpdateEntryRequest();
     message.type = object.type ?? "";
     message.tenantId = object.tenantId ?? "";
@@ -159,7 +159,7 @@ export const UpdateEntryRequest_DataEntry = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateEntryRequest_DataEntry>, I>>(object: I): UpdateEntryRequest_DataEntry {
+  fromPartial(object: DeepPartial<UpdateEntryRequest_DataEntry>): UpdateEntryRequest_DataEntry {
     const message = createBaseUpdateEntryRequest_DataEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
@@ -200,7 +200,7 @@ export const UpdateEntryResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateEntryResponse>, I>>(_: I): UpdateEntryResponse {
+  fromPartial(_: DeepPartial<UpdateEntryResponse>): UpdateEntryResponse {
     const message = createBaseUpdateEntryResponse();
     return message;
   },
@@ -213,10 +213,6 @@ export type DeepPartial<T> = T extends Builtin ? T
   : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-
-type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isObject(value: any): boolean {
   return typeof value === "object" && value !== null;

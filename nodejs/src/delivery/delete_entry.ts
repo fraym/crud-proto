@@ -70,7 +70,7 @@ export const DeleteEntryRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<DeleteEntryRequest>, I>>(object: I): DeleteEntryRequest {
+  fromPartial(object: DeepPartial<DeleteEntryRequest>): DeleteEntryRequest {
     const message = createBaseDeleteEntryRequest();
     message.type = object.type ?? "";
     message.tenantId = object.tenantId ?? "";
@@ -112,7 +112,7 @@ export const DeleteEntryResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<DeleteEntryResponse>, I>>(_: I): DeleteEntryResponse {
+  fromPartial(_: DeepPartial<DeleteEntryResponse>): DeleteEntryResponse {
     const message = createBaseDeleteEntryResponse();
     return message;
   },
@@ -125,10 +125,6 @@ export type DeepPartial<T> = T extends Builtin ? T
   : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-
-type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;
