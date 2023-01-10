@@ -10,9 +10,9 @@ export {
     Entry_DataEntry,
     GetEntriesRequest,
     GetEntriesResponse,
-    DataFilter,
-    DataFieldFilter,
-    DataFilter_FieldsEntry,
+    EntryFilter,
+    EntryFilter_FieldsEntry,
+    EntryFieldFilter,
 } from "./delivery/get_entries";
 
 export {

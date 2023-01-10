@@ -10,21 +10,21 @@ export interface GetEntriesRequest {
   limit: number;
   page: number;
   returnEmptyDataIfNotFound: boolean;
-  filter: DataFilter | undefined;
+  filter: EntryFilter | undefined;
 }
 
-export interface DataFilter {
-  fields: { [key: string]: DataFieldFilter };
-  and: DataFilter[];
-  or: DataFilter[];
+export interface EntryFilter {
+  fields: { [key: string]: EntryFieldFilter };
+  and: EntryFilter[];
+  or: EntryFilter[];
 }
 
-export interface DataFilter_FieldsEntry {
+export interface EntryFilter_FieldsEntry {
   key: string;
-  value: DataFieldFilter | undefined;
+  value: EntryFieldFilter | undefined;
 }
 
-export interface DataFieldFilter {
+export interface EntryFieldFilter {
   type: string;
   operation: string;
   value: string;
@@ -70,7 +70,7 @@ export const GetEntriesRequest = {
       writer.uint32(48).bool(message.returnEmptyDataIfNotFound);
     }
     if (message.filter !== undefined) {
-      DataFilter.encode(message.filter, writer.uint32(58).fork()).ldelim();
+      EntryFilter.encode(message.filter, writer.uint32(58).fork()).ldelim();
     }
     return writer;
   },
@@ -101,7 +101,7 @@ export const GetEntriesRequest = {
           message.returnEmptyDataIfNotFound = reader.bool();
           break;
         case 7:
-          message.filter = DataFilter.decode(reader, reader.uint32());
+          message.filter = EntryFilter.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -121,7 +121,7 @@ export const GetEntriesRequest = {
       returnEmptyDataIfNotFound: isSet(object.returnEmptyDataIfNotFound)
         ? Boolean(object.returnEmptyDataIfNotFound)
         : false,
-      filter: isSet(object.filter) ? DataFilter.fromJSON(object.filter) : undefined,
+      filter: isSet(object.filter) ? EntryFilter.fromJSON(object.filter) : undefined,
     };
   },
 
@@ -134,7 +134,7 @@ export const GetEntriesRequest = {
     message.page !== undefined && (obj.page = Math.round(message.page));
     message.returnEmptyDataIfNotFound !== undefined &&
       (obj.returnEmptyDataIfNotFound = message.returnEmptyDataIfNotFound);
-    message.filter !== undefined && (obj.filter = message.filter ? DataFilter.toJSON(message.filter) : undefined);
+    message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
     return obj;
   },
 
@@ -147,48 +147,48 @@ export const GetEntriesRequest = {
     message.page = object.page ?? 0;
     message.returnEmptyDataIfNotFound = object.returnEmptyDataIfNotFound ?? false;
     message.filter = (object.filter !== undefined && object.filter !== null)
-      ? DataFilter.fromPartial(object.filter)
+      ? EntryFilter.fromPartial(object.filter)
       : undefined;
     return message;
   },
 };
 
-function createBaseDataFilter(): DataFilter {
+function createBaseEntryFilter(): EntryFilter {
   return { fields: {}, and: [], or: [] };
 }
 
-export const DataFilter = {
-  encode(message: DataFilter, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const EntryFilter = {
+  encode(message: EntryFilter, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     Object.entries(message.fields).forEach(([key, value]) => {
-      DataFilter_FieldsEntry.encode({ key: key as any, value }, writer.uint32(10).fork()).ldelim();
+      EntryFilter_FieldsEntry.encode({ key: key as any, value }, writer.uint32(10).fork()).ldelim();
     });
     for (const v of message.and) {
-      DataFilter.encode(v!, writer.uint32(18).fork()).ldelim();
+      EntryFilter.encode(v!, writer.uint32(18).fork()).ldelim();
     }
     for (const v of message.or) {
-      DataFilter.encode(v!, writer.uint32(26).fork()).ldelim();
+      EntryFilter.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): DataFilter {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntryFilter {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDataFilter();
+    const message = createBaseEntryFilter();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          const entry1 = DataFilter_FieldsEntry.decode(reader, reader.uint32());
+          const entry1 = EntryFilter_FieldsEntry.decode(reader, reader.uint32());
           if (entry1.value !== undefined) {
             message.fields[entry1.key] = entry1.value;
           }
           break;
         case 2:
-          message.and.push(DataFilter.decode(reader, reader.uint32()));
+          message.and.push(EntryFilter.decode(reader, reader.uint32()));
           break;
         case 3:
-          message.or.push(DataFilter.decode(reader, reader.uint32()));
+          message.or.push(EntryFilter.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -198,76 +198,76 @@ export const DataFilter = {
     return message;
   },
 
-  fromJSON(object: any): DataFilter {
+  fromJSON(object: any): EntryFilter {
     return {
       fields: isObject(object.fields)
-        ? Object.entries(object.fields).reduce<{ [key: string]: DataFieldFilter }>((acc, [key, value]) => {
-          acc[key] = DataFieldFilter.fromJSON(value);
+        ? Object.entries(object.fields).reduce<{ [key: string]: EntryFieldFilter }>((acc, [key, value]) => {
+          acc[key] = EntryFieldFilter.fromJSON(value);
           return acc;
         }, {})
         : {},
-      and: Array.isArray(object?.and) ? object.and.map((e: any) => DataFilter.fromJSON(e)) : [],
-      or: Array.isArray(object?.or) ? object.or.map((e: any) => DataFilter.fromJSON(e)) : [],
+      and: Array.isArray(object?.and) ? object.and.map((e: any) => EntryFilter.fromJSON(e)) : [],
+      or: Array.isArray(object?.or) ? object.or.map((e: any) => EntryFilter.fromJSON(e)) : [],
     };
   },
 
-  toJSON(message: DataFilter): unknown {
+  toJSON(message: EntryFilter): unknown {
     const obj: any = {};
     obj.fields = {};
     if (message.fields) {
       Object.entries(message.fields).forEach(([k, v]) => {
-        obj.fields[k] = DataFieldFilter.toJSON(v);
+        obj.fields[k] = EntryFieldFilter.toJSON(v);
       });
     }
     if (message.and) {
-      obj.and = message.and.map((e) => e ? DataFilter.toJSON(e) : undefined);
+      obj.and = message.and.map((e) => e ? EntryFilter.toJSON(e) : undefined);
     } else {
       obj.and = [];
     }
     if (message.or) {
-      obj.or = message.or.map((e) => e ? DataFilter.toJSON(e) : undefined);
+      obj.or = message.or.map((e) => e ? EntryFilter.toJSON(e) : undefined);
     } else {
       obj.or = [];
     }
     return obj;
   },
 
-  fromPartial(object: DeepPartial<DataFilter>): DataFilter {
-    const message = createBaseDataFilter();
-    message.fields = Object.entries(object.fields ?? {}).reduce<{ [key: string]: DataFieldFilter }>(
+  fromPartial(object: DeepPartial<EntryFilter>): EntryFilter {
+    const message = createBaseEntryFilter();
+    message.fields = Object.entries(object.fields ?? {}).reduce<{ [key: string]: EntryFieldFilter }>(
       (acc, [key, value]) => {
         if (value !== undefined) {
-          acc[key] = DataFieldFilter.fromPartial(value);
+          acc[key] = EntryFieldFilter.fromPartial(value);
         }
         return acc;
       },
       {},
     );
-    message.and = object.and?.map((e) => DataFilter.fromPartial(e)) || [];
-    message.or = object.or?.map((e) => DataFilter.fromPartial(e)) || [];
+    message.and = object.and?.map((e) => EntryFilter.fromPartial(e)) || [];
+    message.or = object.or?.map((e) => EntryFilter.fromPartial(e)) || [];
     return message;
   },
 };
 
-function createBaseDataFilter_FieldsEntry(): DataFilter_FieldsEntry {
+function createBaseEntryFilter_FieldsEntry(): EntryFilter_FieldsEntry {
   return { key: "", value: undefined };
 }
 
-export const DataFilter_FieldsEntry = {
-  encode(message: DataFilter_FieldsEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const EntryFilter_FieldsEntry = {
+  encode(message: EntryFilter_FieldsEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
     if (message.value !== undefined) {
-      DataFieldFilter.encode(message.value, writer.uint32(18).fork()).ldelim();
+      EntryFieldFilter.encode(message.value, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): DataFilter_FieldsEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntryFilter_FieldsEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDataFilter_FieldsEntry();
+    const message = createBaseEntryFilter_FieldsEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -275,7 +275,7 @@ export const DataFilter_FieldsEntry = {
           message.key = reader.string();
           break;
         case 2:
-          message.value = DataFieldFilter.decode(reader, reader.uint32());
+          message.value = EntryFieldFilter.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -285,36 +285,36 @@ export const DataFilter_FieldsEntry = {
     return message;
   },
 
-  fromJSON(object: any): DataFilter_FieldsEntry {
+  fromJSON(object: any): EntryFilter_FieldsEntry {
     return {
       key: isSet(object.key) ? String(object.key) : "",
-      value: isSet(object.value) ? DataFieldFilter.fromJSON(object.value) : undefined,
+      value: isSet(object.value) ? EntryFieldFilter.fromJSON(object.value) : undefined,
     };
   },
 
-  toJSON(message: DataFilter_FieldsEntry): unknown {
+  toJSON(message: EntryFilter_FieldsEntry): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value ? DataFieldFilter.toJSON(message.value) : undefined);
+    message.value !== undefined && (obj.value = message.value ? EntryFieldFilter.toJSON(message.value) : undefined);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<DataFilter_FieldsEntry>): DataFilter_FieldsEntry {
-    const message = createBaseDataFilter_FieldsEntry();
+  fromPartial(object: DeepPartial<EntryFilter_FieldsEntry>): EntryFilter_FieldsEntry {
+    const message = createBaseEntryFilter_FieldsEntry();
     message.key = object.key ?? "";
     message.value = (object.value !== undefined && object.value !== null)
-      ? DataFieldFilter.fromPartial(object.value)
+      ? EntryFieldFilter.fromPartial(object.value)
       : undefined;
     return message;
   },
 };
 
-function createBaseDataFieldFilter(): DataFieldFilter {
+function createBaseEntryFieldFilter(): EntryFieldFilter {
   return { type: "", operation: "", value: "" };
 }
 
-export const DataFieldFilter = {
-  encode(message: DataFieldFilter, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const EntryFieldFilter = {
+  encode(message: EntryFieldFilter, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
@@ -327,10 +327,10 @@ export const DataFieldFilter = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): DataFieldFilter {
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntryFieldFilter {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDataFieldFilter();
+    const message = createBaseEntryFieldFilter();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -351,7 +351,7 @@ export const DataFieldFilter = {
     return message;
   },
 
-  fromJSON(object: any): DataFieldFilter {
+  fromJSON(object: any): EntryFieldFilter {
     return {
       type: isSet(object.type) ? String(object.type) : "",
       operation: isSet(object.operation) ? String(object.operation) : "",
@@ -359,7 +359,7 @@ export const DataFieldFilter = {
     };
   },
 
-  toJSON(message: DataFieldFilter): unknown {
+  toJSON(message: EntryFieldFilter): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
     message.operation !== undefined && (obj.operation = message.operation);
@@ -367,8 +367,8 @@ export const DataFieldFilter = {
     return obj;
   },
 
-  fromPartial(object: DeepPartial<DataFieldFilter>): DataFieldFilter {
-    const message = createBaseDataFieldFilter();
+  fromPartial(object: DeepPartial<EntryFieldFilter>): EntryFieldFilter {
+    const message = createBaseEntryFieldFilter();
     message.type = object.type ?? "";
     message.operation = object.operation ?? "";
     message.value = object.value ?? "";

@@ -1,3 +1,7 @@
+# v1.0.0-alpha.8
+
+- (bug) Rename `DataFilter` to `EntryFilter`
+
 # v1.0.0-alpha.7
 
 - (feature) Add `DataFilter` to `GetEntriesRequest`

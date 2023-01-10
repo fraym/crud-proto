@@ -8,16 +8,16 @@ message GetEntriesRequest {
 	int32 limit = 4;
 	int32 page = 5;
 	bool returnEmptyDataIfNotFound = 6;
-	DataFilter filter = 7;
+	EntryFilter filter = 7;
 }
 
-message DataFilter {
-	map<string, DataFieldFilter> fields = 1;
-	repeated DataFilter and = 2;
-	repeated DataFilter or = 3;
+message EntryFilter {
+	map<string, EntryFieldFilter> fields = 1;
+	repeated EntryFilter and = 2;
+	repeated EntryFilter or = 3;
 }
 
-message DataFieldFilter {
+message EntryFieldFilter {
 	string type = 1;
 	string operation = 2;
 	string value = 3;
