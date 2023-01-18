@@ -54,6 +54,10 @@ export const RemoveTypesRequest = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<RemoveTypesRequest>, I>>(base?: I): RemoveTypesRequest {
+    return RemoveTypesRequest.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<RemoveTypesRequest>, I>>(object: I): RemoveTypesRequest {
     const message = createBaseRemoveTypesRequest();
     message.typeNames = object.typeNames?.map((e) => e) || [];
@@ -92,6 +96,10 @@ export const RemoveTypesResponse = {
   toJSON(_: RemoveTypesResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<RemoveTypesResponse>, I>>(base?: I): RemoveTypesResponse {
+    return RemoveTypesResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<RemoveTypesResponse>, I>>(_: I): RemoveTypesResponse {

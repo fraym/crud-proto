@@ -70,6 +70,10 @@ export const DeleteEntryRequest = {
     return obj;
   },
 
+  create(base?: DeepPartial<DeleteEntryRequest>): DeleteEntryRequest {
+    return DeleteEntryRequest.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<DeleteEntryRequest>): DeleteEntryRequest {
     const message = createBaseDeleteEntryRequest();
     message.type = object.type ?? "";
@@ -110,6 +114,10 @@ export const DeleteEntryResponse = {
   toJSON(_: DeleteEntryResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create(base?: DeepPartial<DeleteEntryResponse>): DeleteEntryResponse {
+    return DeleteEntryResponse.fromPartial(base ?? {});
   },
 
   fromPartial(_: DeepPartial<DeleteEntryResponse>): DeleteEntryResponse {

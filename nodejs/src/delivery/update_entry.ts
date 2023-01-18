@@ -97,6 +97,10 @@ export const UpdateEntryRequest = {
     return obj;
   },
 
+  create(base?: DeepPartial<UpdateEntryRequest>): UpdateEntryRequest {
+    return UpdateEntryRequest.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<UpdateEntryRequest>): UpdateEntryRequest {
     const message = createBaseUpdateEntryRequest();
     message.type = object.type ?? "";
@@ -159,6 +163,10 @@ export const UpdateEntryRequest_DataEntry = {
     return obj;
   },
 
+  create(base?: DeepPartial<UpdateEntryRequest_DataEntry>): UpdateEntryRequest_DataEntry {
+    return UpdateEntryRequest_DataEntry.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<UpdateEntryRequest_DataEntry>): UpdateEntryRequest_DataEntry {
     const message = createBaseUpdateEntryRequest_DataEntry();
     message.key = object.key ?? "";
@@ -198,6 +206,10 @@ export const UpdateEntryResponse = {
   toJSON(_: UpdateEntryResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create(base?: DeepPartial<UpdateEntryResponse>): UpdateEntryResponse {
+    return UpdateEntryResponse.fromPartial(base ?? {});
   },
 
   fromPartial(_: DeepPartial<UpdateEntryResponse>): UpdateEntryResponse {

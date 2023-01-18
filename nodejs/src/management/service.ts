@@ -2,8 +2,8 @@
 import {
   CallOptions,
   ChannelCredentials,
-  ChannelOptions,
   Client,
+  ClientOptions,
   ClientUnaryCall,
   handleUnaryCall,
   makeGenericClientConstructor,
@@ -129,6 +129,6 @@ export interface ServiceClient extends Client {
 }
 
 export const ServiceClient = makeGenericClientConstructor(ServiceService, "management.Service") as unknown as {
-  new (address: string, credentials: ChannelCredentials, options?: Partial<ChannelOptions>): ServiceClient;
+  new (address: string, credentials: ChannelCredentials, options?: Partial<ClientOptions>): ServiceClient;
   service: typeof ServiceService;
 };

@@ -138,6 +138,10 @@ export const GetEntriesRequest = {
     return obj;
   },
 
+  create(base?: DeepPartial<GetEntriesRequest>): GetEntriesRequest {
+    return GetEntriesRequest.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<GetEntriesRequest>): GetEntriesRequest {
     const message = createBaseGetEntriesRequest();
     message.type = object.type ?? "";
@@ -232,6 +236,10 @@ export const EntryFilter = {
     return obj;
   },
 
+  create(base?: DeepPartial<EntryFilter>): EntryFilter {
+    return EntryFilter.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<EntryFilter>): EntryFilter {
     const message = createBaseEntryFilter();
     message.fields = Object.entries(object.fields ?? {}).reduce<{ [key: string]: EntryFieldFilter }>(
@@ -297,6 +305,10 @@ export const EntryFilter_FieldsEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value ? EntryFieldFilter.toJSON(message.value) : undefined);
     return obj;
+  },
+
+  create(base?: DeepPartial<EntryFilter_FieldsEntry>): EntryFilter_FieldsEntry {
+    return EntryFilter_FieldsEntry.fromPartial(base ?? {});
   },
 
   fromPartial(object: DeepPartial<EntryFilter_FieldsEntry>): EntryFilter_FieldsEntry {
@@ -367,6 +379,10 @@ export const EntryFieldFilter = {
     return obj;
   },
 
+  create(base?: DeepPartial<EntryFieldFilter>): EntryFieldFilter {
+    return EntryFieldFilter.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<EntryFieldFilter>): EntryFieldFilter {
     const message = createBaseEntryFieldFilter();
     message.type = object.type ?? "";
@@ -431,6 +447,10 @@ export const Entry = {
     return obj;
   },
 
+  create(base?: DeepPartial<Entry>): Entry {
+    return Entry.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<Entry>): Entry {
     const message = createBaseEntry();
     message.data = Object.entries(object.data ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
@@ -488,6 +508,10 @@ export const Entry_DataEntry = {
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
+  },
+
+  create(base?: DeepPartial<Entry_DataEntry>): Entry_DataEntry {
+    return Entry_DataEntry.fromPartial(base ?? {});
   },
 
   fromPartial(object: DeepPartial<Entry_DataEntry>): Entry_DataEntry {
@@ -558,6 +582,10 @@ export const GetEntriesResponse = {
     message.limit !== undefined && (obj.limit = Math.round(message.limit));
     message.page !== undefined && (obj.page = Math.round(message.page));
     return obj;
+  },
+
+  create(base?: DeepPartial<GetEntriesResponse>): GetEntriesResponse {
+    return GetEntriesResponse.fromPartial(base ?? {});
   },
 
   fromPartial(object: DeepPartial<GetEntriesResponse>): GetEntriesResponse {

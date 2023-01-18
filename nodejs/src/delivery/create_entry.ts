@@ -89,6 +89,10 @@ export const CreateEntryRequest = {
     return obj;
   },
 
+  create(base?: DeepPartial<CreateEntryRequest>): CreateEntryRequest {
+    return CreateEntryRequest.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<CreateEntryRequest>): CreateEntryRequest {
     const message = createBaseCreateEntryRequest();
     message.type = object.type ?? "";
@@ -150,6 +154,10 @@ export const CreateEntryRequest_DataEntry = {
     return obj;
   },
 
+  create(base?: DeepPartial<CreateEntryRequest_DataEntry>): CreateEntryRequest_DataEntry {
+    return CreateEntryRequest_DataEntry.fromPartial(base ?? {});
+  },
+
   fromPartial(object: DeepPartial<CreateEntryRequest_DataEntry>): CreateEntryRequest_DataEntry {
     const message = createBaseCreateEntryRequest_DataEntry();
     message.key = object.key ?? "";
@@ -196,6 +204,10 @@ export const CreateEntryResponse = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     return obj;
+  },
+
+  create(base?: DeepPartial<CreateEntryResponse>): CreateEntryResponse {
+    return CreateEntryResponse.fromPartial(base ?? {});
   },
 
   fromPartial(object: DeepPartial<CreateEntryResponse>): CreateEntryResponse {

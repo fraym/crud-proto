@@ -43,6 +43,10 @@ export const GetTypesRequest = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<GetTypesRequest>, I>>(base?: I): GetTypesRequest {
+    return GetTypesRequest.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<GetTypesRequest>, I>>(_: I): GetTypesRequest {
     const message = createBaseGetTypesRequest();
     return message;
@@ -91,6 +95,10 @@ export const GetTypesResponse = {
       obj.typeNames = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetTypesResponse>, I>>(base?: I): GetTypesResponse {
+    return GetTypesResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<GetTypesResponse>, I>>(object: I): GetTypesResponse {
