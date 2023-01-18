@@ -1,3 +1,7 @@
+# v1.0.0-alpha.9
+
+- (bug) Fix nodejs lib
+
 # v1.0.0-alpha.8
 
 - (bug) Rename `DataFilter` to `EntryFilter`

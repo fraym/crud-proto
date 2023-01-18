@@ -22,8 +22,8 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "dependencies": {
-        "@grpc/grpc-js": "^1.7.2",
-        "ts-proto": "^1.129.0"
+        "@grpc/grpc-js": "^1.8.4",
+        "ts-proto": "^1.138.0"
     },
     "devDependencies": {
         "@becklyn/prettier": "^1.0.2",
