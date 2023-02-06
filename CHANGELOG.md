@@ -1,3 +1,7 @@
+# v1.0.0-alpha.11
+
+- (internal) Update @grpc/grpc-js
+
 # v1.0.0-alpha.10
 
 - (feature) Allow defining the id when creating a entry
