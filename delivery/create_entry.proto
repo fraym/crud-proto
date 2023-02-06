@@ -5,6 +5,7 @@ message CreateEntryRequest {
 	string type = 1;
 	string tenant_id = 2;
 	map<string, string> data = 3;
+	string id = 4;
 }
 
 message CreateEntryResponse {

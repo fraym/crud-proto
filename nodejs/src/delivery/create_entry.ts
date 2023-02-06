@@ -7,6 +7,7 @@ export interface CreateEntryRequest {
   type: string;
   tenantId: string;
   data: { [key: string]: string };
+  id: string;
 }
 
 export interface CreateEntryRequest_DataEntry {
@@ -19,7 +20,7 @@ export interface CreateEntryResponse {
 }
 
 function createBaseCreateEntryRequest(): CreateEntryRequest {
-  return { type: "", tenantId: "", data: {} };
+  return { type: "", tenantId: "", data: {}, id: "" };
 }
 
 export const CreateEntryRequest = {
@@ -33,6 +34,9 @@ export const CreateEntryRequest = {
     Object.entries(message.data).forEach(([key, value]) => {
       CreateEntryRequest_DataEntry.encode({ key: key as any, value }, writer.uint32(26).fork()).ldelim();
     });
+    if (message.id !== "") {
+      writer.uint32(34).string(message.id);
+    }
     return writer;
   },
 
@@ -55,6 +59,9 @@ export const CreateEntryRequest = {
             message.data[entry3.key] = entry3.value;
           }
           break;
+        case 4:
+          message.id = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -73,6 +80,7 @@ export const CreateEntryRequest = {
           return acc;
         }, {})
         : {},
+      id: isSet(object.id) ? String(object.id) : "",
     };
   },
 
@@ -86,6 +94,7 @@ export const CreateEntryRequest = {
         obj.data[k] = v;
       });
     }
+    message.id !== undefined && (obj.id = message.id);
     return obj;
   },
 
@@ -103,6 +112,7 @@ export const CreateEntryRequest = {
       }
       return acc;
     }, {});
+    message.id = object.id ?? "";
     return message;
   },
 };

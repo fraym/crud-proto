@@ -1,3 +1,7 @@
+# v1.0.0-alpha.10
+
+- (feature) Allow defining the id when creating a entry
+
 # v1.0.0-alpha.9
 
 - (bug) Fix nodejs lib
