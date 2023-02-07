@@ -12,7 +12,7 @@ import {
   UntypedServiceImplementation,
 } from "@grpc/grpc-js";
 import { CreateEntryRequest, CreateEntryResponse } from "./create_entry";
-import { DeleteEntryRequest, DeleteEntryResponse } from "./delete_entry";
+import { DeleteEntriesRequest, DeleteEntriesResponse } from "./delete_entries";
 import { GetEntriesRequest, GetEntriesResponse } from "./get_entries";
 import { UpdateEntryRequest, UpdateEntryResponse } from "./update_entry";
 
@@ -47,14 +47,14 @@ export const ServiceService = {
     responseSerialize: (value: UpdateEntryResponse) => Buffer.from(UpdateEntryResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => UpdateEntryResponse.decode(value),
   },
-  deleteEntry: {
-    path: "/delivery.Service/DeleteEntry",
+  deleteEntries: {
+    path: "/delivery.Service/DeleteEntries",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: DeleteEntryRequest) => Buffer.from(DeleteEntryRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => DeleteEntryRequest.decode(value),
-    responseSerialize: (value: DeleteEntryResponse) => Buffer.from(DeleteEntryResponse.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => DeleteEntryResponse.decode(value),
+    requestSerialize: (value: DeleteEntriesRequest) => Buffer.from(DeleteEntriesRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => DeleteEntriesRequest.decode(value),
+    responseSerialize: (value: DeleteEntriesResponse) => Buffer.from(DeleteEntriesResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => DeleteEntriesResponse.decode(value),
   },
 } as const;
 
@@ -62,7 +62,7 @@ export interface ServiceServer extends UntypedServiceImplementation {
   getEntries: handleUnaryCall<GetEntriesRequest, GetEntriesResponse>;
   createEntry: handleUnaryCall<CreateEntryRequest, CreateEntryResponse>;
   updateEntry: handleUnaryCall<UpdateEntryRequest, UpdateEntryResponse>;
-  deleteEntry: handleUnaryCall<DeleteEntryRequest, DeleteEntryResponse>;
+  deleteEntries: handleUnaryCall<DeleteEntriesRequest, DeleteEntriesResponse>;
 }
 
 export interface ServiceClient extends Client {
@@ -111,20 +111,20 @@ export interface ServiceClient extends Client {
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: UpdateEntryResponse) => void,
   ): ClientUnaryCall;
-  deleteEntry(
-    request: DeleteEntryRequest,
-    callback: (error: ServiceError | null, response: DeleteEntryResponse) => void,
+  deleteEntries(
+    request: DeleteEntriesRequest,
+    callback: (error: ServiceError | null, response: DeleteEntriesResponse) => void,
   ): ClientUnaryCall;
-  deleteEntry(
-    request: DeleteEntryRequest,
+  deleteEntries(
+    request: DeleteEntriesRequest,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: DeleteEntryResponse) => void,
+    callback: (error: ServiceError | null, response: DeleteEntriesResponse) => void,
   ): ClientUnaryCall;
-  deleteEntry(
-    request: DeleteEntryRequest,
+  deleteEntries(
+    request: DeleteEntriesRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: DeleteEntryResponse) => void,
+    callback: (error: ServiceError | null, response: DeleteEntriesResponse) => void,
   ): ClientUnaryCall;
 }
 

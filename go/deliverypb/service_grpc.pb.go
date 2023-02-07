@@ -25,7 +25,7 @@ type ServiceClient interface {
 	GetEntries(ctx context.Context, in *GetEntriesRequest, opts ...grpc.CallOption) (*GetEntriesResponse, error)
 	CreateEntry(ctx context.Context, in *CreateEntryRequest, opts ...grpc.CallOption) (*CreateEntryResponse, error)
 	UpdateEntry(ctx context.Context, in *UpdateEntryRequest, opts ...grpc.CallOption) (*UpdateEntryResponse, error)
-	DeleteEntry(ctx context.Context, in *DeleteEntryRequest, opts ...grpc.CallOption) (*DeleteEntryResponse, error)
+	DeleteEntries(ctx context.Context, in *DeleteEntriesRequest, opts ...grpc.CallOption) (*DeleteEntriesResponse, error)
 }
 
 type serviceClient struct {
@@ -63,9 +63,9 @@ func (c *serviceClient) UpdateEntry(ctx context.Context, in *UpdateEntryRequest,
 	return out, nil
 }
 
-func (c *serviceClient) DeleteEntry(ctx context.Context, in *DeleteEntryRequest, opts ...grpc.CallOption) (*DeleteEntryResponse, error) {
-	out := new(DeleteEntryResponse)
-	err := c.cc.Invoke(ctx, "/delivery.Service/DeleteEntry", in, out, opts...)
+func (c *serviceClient) DeleteEntries(ctx context.Context, in *DeleteEntriesRequest, opts ...grpc.CallOption) (*DeleteEntriesResponse, error) {
+	out := new(DeleteEntriesResponse)
+	err := c.cc.Invoke(ctx, "/delivery.Service/DeleteEntries", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ type ServiceServer interface {
 	GetEntries(context.Context, *GetEntriesRequest) (*GetEntriesResponse, error)
 	CreateEntry(context.Context, *CreateEntryRequest) (*CreateEntryResponse, error)
 	UpdateEntry(context.Context, *UpdateEntryRequest) (*UpdateEntryResponse, error)
-	DeleteEntry(context.Context, *DeleteEntryRequest) (*DeleteEntryResponse, error)
+	DeleteEntries(context.Context, *DeleteEntriesRequest) (*DeleteEntriesResponse, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -96,8 +96,8 @@ func (UnimplementedServiceServer) CreateEntry(context.Context, *CreateEntryReque
 func (UnimplementedServiceServer) UpdateEntry(context.Context, *UpdateEntryRequest) (*UpdateEntryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateEntry not implemented")
 }
-func (UnimplementedServiceServer) DeleteEntry(context.Context, *DeleteEntryRequest) (*DeleteEntryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteEntry not implemented")
+func (UnimplementedServiceServer) DeleteEntries(context.Context, *DeleteEntriesRequest) (*DeleteEntriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteEntries not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
@@ -166,20 +166,20 @@ func _Service_UpdateEntry_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_DeleteEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteEntryRequest)
+func _Service_DeleteEntries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteEntriesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).DeleteEntry(ctx, in)
+		return srv.(ServiceServer).DeleteEntries(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/delivery.Service/DeleteEntry",
+		FullMethod: "/delivery.Service/DeleteEntries",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).DeleteEntry(ctx, req.(*DeleteEntryRequest))
+		return srv.(ServiceServer).DeleteEntries(ctx, req.(*DeleteEntriesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -204,8 +204,8 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Service_UpdateEntry_Handler,
 		},
 		{
-			MethodName: "DeleteEntry",
-			Handler:    _Service_DeleteEntry_Handler,
+			MethodName: "DeleteEntries",
+			Handler:    _Service_DeleteEntries_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

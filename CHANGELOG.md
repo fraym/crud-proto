@@ -1,3 +1,8 @@
+# v1.0.0-alpha.12
+
+- (bc) Delete multiple entries instead of one: `DeleteEntry` is now `DeleteEntries`
+- (feature) Add `EntryOrder` to `GetEntriesRequest`
+
 # v1.0.0-alpha.11
 
 - (internal) Update @grpc/grpc-js

@@ -1,5 +1,6 @@
 syntax = "proto3";
 package delivery;
+import "delivery/entry_filter.proto";
 
 message GetEntriesRequest {
 	string type = 1;
@@ -9,18 +10,12 @@ message GetEntriesRequest {
 	int32 page = 5;
 	bool returnEmptyDataIfNotFound = 6;
 	EntryFilter filter = 7;
+	repeated EntryOrder order = 8;
 }
 
-message EntryFilter {
-	map<string, EntryFieldFilter> fields = 1;
-	repeated EntryFilter and = 2;
-	repeated EntryFilter or = 3;
-}
-
-message EntryFieldFilter {
-	string type = 1;
-	string operation = 2;
-	string value = 3;
+message EntryOrder {
+	string field = 1;
+	bool descending = 2;
 }
 
 message Entry {

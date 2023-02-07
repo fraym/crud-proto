@@ -10,10 +10,10 @@ export {
     Entry_DataEntry,
     GetEntriesRequest,
     GetEntriesResponse,
-    EntryFilter,
-    EntryFilter_FieldsEntry,
-    EntryFieldFilter,
+    EntryOrder,
 } from "./delivery/get_entries";
+
+export { EntryFilter, EntryFilter_FieldsEntry, EntryFieldFilter } from "./delivery/entry_filter";
 
 export {
     CreateEntryRequest,
@@ -27,7 +27,7 @@ export {
     UpdateEntryResponse,
 } from "./delivery/update_entry";
 
-export { DeleteEntryRequest, DeleteEntryResponse } from "./delivery/delete_entry";
+export { DeleteEntriesRequest, DeleteEntriesResponse } from "./delivery/delete_entries";
 
 export {
     ServiceClient as ManagementServiceClient,

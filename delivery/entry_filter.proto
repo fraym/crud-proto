@@ -1,0 +1,14 @@
+syntax = "proto3";
+package delivery;
+
+message EntryFilter {
+	map<string, EntryFieldFilter> fields = 1;
+	repeated EntryFilter and = 2;
+	repeated EntryFilter or = 3;
+}
+
+message EntryFieldFilter {
+	string type = 1;
+	string operation = 2;
+	string value = 3;
+}

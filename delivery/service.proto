@@ -3,12 +3,11 @@ package delivery;
 import "delivery/get_entries.proto";
 import "delivery/create_entry.proto";
 import "delivery/update_entry.proto";
-import "delivery/delete_entry.proto";
+import "delivery/delete_entries.proto";
   
 service Service {
 	rpc GetEntries(GetEntriesRequest) returns (GetEntriesResponse);
 	rpc CreateEntry(CreateEntryRequest) returns (CreateEntryResponse);
 	rpc UpdateEntry(UpdateEntryRequest) returns (UpdateEntryResponse);
-	rpc DeleteEntry(DeleteEntryRequest) returns (DeleteEntryResponse);
+	rpc DeleteEntries(DeleteEntriesRequest) returns (DeleteEntriesResponse);
 }
- 
