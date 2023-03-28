@@ -6,7 +6,8 @@ import "delivery/update_entry.proto";
 import "delivery/delete_entries.proto";
   
 service Service {
-	rpc GetEntries(GetEntriesRequest) returns (GetEntriesResponse);
+	rpc GetEntry(GetEntryRequest) returns (GetEntryResponse);
+	rpc GetEntryList(GetEntryListRequest) returns (GetEntryListResponse);
 	rpc CreateEntry(CreateEntryRequest) returns (CreateEntryResponse);
 	rpc UpdateEntry(UpdateEntryRequest) returns (UpdateEntryResponse);
 	rpc DeleteEntries(DeleteEntriesRequest) returns (DeleteEntriesResponse);

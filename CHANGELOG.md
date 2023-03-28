@@ -1,3 +1,8 @@
+# v1.0.0-alpha.13
+
+- (bc) Use int64 instead of int32 for pagination
+- (bc) Extend and refactor delivery api
+
 # v1.0.0-alpha.12
 
 - (bc) Delete multiple entries instead of one: `DeleteEntry` is now `DeleteEntries`

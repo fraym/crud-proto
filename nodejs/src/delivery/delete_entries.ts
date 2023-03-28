@@ -1,21 +1,24 @@
 /* eslint-disable */
+import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { AuthData } from "./auth";
 import { EntryFilter } from "./entry_filter";
 
 export const protobufPackage = "delivery";
 
 export interface DeleteEntriesRequest {
   type: string;
-  tenantId: string;
+  auth: AuthData | undefined;
   id: string;
   filter: EntryFilter | undefined;
 }
 
 export interface DeleteEntriesResponse {
+  numberOfDeletedEntries: number;
 }
 
 function createBaseDeleteEntriesRequest(): DeleteEntriesRequest {
-  return { type: "", tenantId: "", id: "", filter: undefined };
+  return { type: "", auth: undefined, id: "", filter: undefined };
 }
 
 export const DeleteEntriesRequest = {
@@ -23,8 +26,8 @@ export const DeleteEntriesRequest = {
     if (message.type !== "") {
       writer.uint32(10).string(message.type);
     }
-    if (message.tenantId !== "") {
-      writer.uint32(18).string(message.tenantId);
+    if (message.auth !== undefined) {
+      AuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
     }
     if (message.id !== "") {
       writer.uint32(26).string(message.id);
@@ -46,7 +49,7 @@ export const DeleteEntriesRequest = {
           message.type = reader.string();
           break;
         case 2:
-          message.tenantId = reader.string();
+          message.auth = AuthData.decode(reader, reader.uint32());
           break;
         case 3:
           message.id = reader.string();
@@ -65,7 +68,7 @@ export const DeleteEntriesRequest = {
   fromJSON(object: any): DeleteEntriesRequest {
     return {
       type: isSet(object.type) ? String(object.type) : "",
-      tenantId: isSet(object.tenantId) ? String(object.tenantId) : "",
+      auth: isSet(object.auth) ? AuthData.fromJSON(object.auth) : undefined,
       id: isSet(object.id) ? String(object.id) : "",
       filter: isSet(object.filter) ? EntryFilter.fromJSON(object.filter) : undefined,
     };
@@ -74,7 +77,7 @@ export const DeleteEntriesRequest = {
   toJSON(message: DeleteEntriesRequest): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
-    message.tenantId !== undefined && (obj.tenantId = message.tenantId);
+    message.auth !== undefined && (obj.auth = message.auth ? AuthData.toJSON(message.auth) : undefined);
     message.id !== undefined && (obj.id = message.id);
     message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
     return obj;
@@ -87,7 +90,7 @@ export const DeleteEntriesRequest = {
   fromPartial(object: DeepPartial<DeleteEntriesRequest>): DeleteEntriesRequest {
     const message = createBaseDeleteEntriesRequest();
     message.type = object.type ?? "";
-    message.tenantId = object.tenantId ?? "";
+    message.auth = (object.auth !== undefined && object.auth !== null) ? AuthData.fromPartial(object.auth) : undefined;
     message.id = object.id ?? "";
     message.filter = (object.filter !== undefined && object.filter !== null)
       ? EntryFilter.fromPartial(object.filter)
@@ -97,11 +100,14 @@ export const DeleteEntriesRequest = {
 };
 
 function createBaseDeleteEntriesResponse(): DeleteEntriesResponse {
-  return {};
+  return { numberOfDeletedEntries: 0 };
 }
 
 export const DeleteEntriesResponse = {
-  encode(_: DeleteEntriesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: DeleteEntriesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.numberOfDeletedEntries !== 0) {
+      writer.uint32(8).int64(message.numberOfDeletedEntries);
+    }
     return writer;
   },
 
@@ -112,6 +118,9 @@ export const DeleteEntriesResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.numberOfDeletedEntries = longToNumber(reader.int64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -120,12 +129,14 @@ export const DeleteEntriesResponse = {
     return message;
   },
 
-  fromJSON(_: any): DeleteEntriesResponse {
-    return {};
+  fromJSON(object: any): DeleteEntriesResponse {
+    return { numberOfDeletedEntries: isSet(object.numberOfDeletedEntries) ? Number(object.numberOfDeletedEntries) : 0 };
   },
 
-  toJSON(_: DeleteEntriesResponse): unknown {
+  toJSON(message: DeleteEntriesResponse): unknown {
     const obj: any = {};
+    message.numberOfDeletedEntries !== undefined &&
+      (obj.numberOfDeletedEntries = Math.round(message.numberOfDeletedEntries));
     return obj;
   },
 
@@ -133,11 +144,31 @@ export const DeleteEntriesResponse = {
     return DeleteEntriesResponse.fromPartial(base ?? {});
   },
 
-  fromPartial(_: DeepPartial<DeleteEntriesResponse>): DeleteEntriesResponse {
+  fromPartial(object: DeepPartial<DeleteEntriesResponse>): DeleteEntriesResponse {
     const message = createBaseDeleteEntriesResponse();
+    message.numberOfDeletedEntries = object.numberOfDeletedEntries ?? 0;
     return message;
   },
 };
+
+declare var self: any | undefined;
+declare var window: any | undefined;
+declare var global: any | undefined;
+var tsProtoGlobalThis: any = (() => {
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  throw "Unable to locate global object";
+})();
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
@@ -146,6 +177,18 @@ export type DeepPartial<T> = T extends Builtin ? T
   : T extends { $case: string } ? { [K in keyof Omit<T, "$case">]?: DeepPartial<T[K]> } & { $case: T["$case"] }
   : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
+}
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

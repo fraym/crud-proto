@@ -1,13 +1,16 @@
 syntax = "proto3";
 package delivery;
+import "delivery/auth.proto";
 
 message CreateEntryRequest {
 	string type = 1;
-	string tenant_id = 2;
-	map<string, string> data = 3;
-	string id = 4;
+	AuthData auth = 2;
+	string id = 3;
+	map<string, string> data = 4;
 }
 
 message CreateEntryResponse {
-	string id = 1;
+	map<string, string> newData = 1;
+	repeated string validationErrors = 2;
+	map<string, string> fieldValidationErrors = 3;
 }

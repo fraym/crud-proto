@@ -1,0 +1,8 @@
+syntax = "proto3";
+package delivery;
+
+message AuthData {
+	string tenant_id = 1;
+	repeated string scopes = 2;
+	map<string, string> data = 3;
+}

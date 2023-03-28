@@ -1,12 +1,15 @@
 syntax = "proto3";
 package delivery;
+import "delivery/auth.proto";
 import "delivery/entry_filter.proto";
 
 message DeleteEntriesRequest {
 	string type = 1;
-	string tenant_id = 2;
+	AuthData auth = 2;
 	string id = 3;
 	EntryFilter filter = 4;
 }
 
-message DeleteEntriesResponse {}
+message DeleteEntriesResponse {
+	int64 numberOfDeletedEntries = 1;
+}

@@ -13,21 +13,30 @@ import {
 } from "@grpc/grpc-js";
 import { CreateEntryRequest, CreateEntryResponse } from "./create_entry";
 import { DeleteEntriesRequest, DeleteEntriesResponse } from "./delete_entries";
-import { GetEntriesRequest, GetEntriesResponse } from "./get_entries";
+import { GetEntryListRequest, GetEntryListResponse, GetEntryRequest, GetEntryResponse } from "./get_entries";
 import { UpdateEntryRequest, UpdateEntryResponse } from "./update_entry";
 
 export const protobufPackage = "delivery";
 
 export type ServiceService = typeof ServiceService;
 export const ServiceService = {
-  getEntries: {
-    path: "/delivery.Service/GetEntries",
+  getEntry: {
+    path: "/delivery.Service/GetEntry",
     requestStream: false,
     responseStream: false,
-    requestSerialize: (value: GetEntriesRequest) => Buffer.from(GetEntriesRequest.encode(value).finish()),
-    requestDeserialize: (value: Buffer) => GetEntriesRequest.decode(value),
-    responseSerialize: (value: GetEntriesResponse) => Buffer.from(GetEntriesResponse.encode(value).finish()),
-    responseDeserialize: (value: Buffer) => GetEntriesResponse.decode(value),
+    requestSerialize: (value: GetEntryRequest) => Buffer.from(GetEntryRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => GetEntryRequest.decode(value),
+    responseSerialize: (value: GetEntryResponse) => Buffer.from(GetEntryResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => GetEntryResponse.decode(value),
+  },
+  getEntryList: {
+    path: "/delivery.Service/GetEntryList",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: GetEntryListRequest) => Buffer.from(GetEntryListRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => GetEntryListRequest.decode(value),
+    responseSerialize: (value: GetEntryListResponse) => Buffer.from(GetEntryListResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => GetEntryListResponse.decode(value),
   },
   createEntry: {
     path: "/delivery.Service/CreateEntry",
@@ -59,27 +68,43 @@ export const ServiceService = {
 } as const;
 
 export interface ServiceServer extends UntypedServiceImplementation {
-  getEntries: handleUnaryCall<GetEntriesRequest, GetEntriesResponse>;
+  getEntry: handleUnaryCall<GetEntryRequest, GetEntryResponse>;
+  getEntryList: handleUnaryCall<GetEntryListRequest, GetEntryListResponse>;
   createEntry: handleUnaryCall<CreateEntryRequest, CreateEntryResponse>;
   updateEntry: handleUnaryCall<UpdateEntryRequest, UpdateEntryResponse>;
   deleteEntries: handleUnaryCall<DeleteEntriesRequest, DeleteEntriesResponse>;
 }
 
 export interface ServiceClient extends Client {
-  getEntries(
-    request: GetEntriesRequest,
-    callback: (error: ServiceError | null, response: GetEntriesResponse) => void,
+  getEntry(
+    request: GetEntryRequest,
+    callback: (error: ServiceError | null, response: GetEntryResponse) => void,
   ): ClientUnaryCall;
-  getEntries(
-    request: GetEntriesRequest,
+  getEntry(
+    request: GetEntryRequest,
     metadata: Metadata,
-    callback: (error: ServiceError | null, response: GetEntriesResponse) => void,
+    callback: (error: ServiceError | null, response: GetEntryResponse) => void,
   ): ClientUnaryCall;
-  getEntries(
-    request: GetEntriesRequest,
+  getEntry(
+    request: GetEntryRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
-    callback: (error: ServiceError | null, response: GetEntriesResponse) => void,
+    callback: (error: ServiceError | null, response: GetEntryResponse) => void,
+  ): ClientUnaryCall;
+  getEntryList(
+    request: GetEntryListRequest,
+    callback: (error: ServiceError | null, response: GetEntryListResponse) => void,
+  ): ClientUnaryCall;
+  getEntryList(
+    request: GetEntryListRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: GetEntryListResponse) => void,
+  ): ClientUnaryCall;
+  getEntryList(
+    request: GetEntryListRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: GetEntryListResponse) => void,
   ): ClientUnaryCall;
   createEntry(
     request: CreateEntryRequest,

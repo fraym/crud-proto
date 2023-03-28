@@ -8,10 +8,14 @@ export {
     DeepPartial,
     Entry,
     Entry_DataEntry,
-    GetEntriesRequest,
-    GetEntriesResponse,
+    GetEntryRequest,
+    GetEntryResponse,
+    GetEntryListRequest,
+    GetEntryListResponse,
     EntryOrder,
 } from "./delivery/get_entries";
+
+export { AuthData, AuthData_DataEntry } from "./delivery/auth";
 
 export { EntryFilter, EntryFilter_FieldsEntry, EntryFieldFilter } from "./delivery/entry_filter";
 

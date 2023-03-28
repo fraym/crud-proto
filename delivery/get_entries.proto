@@ -1,17 +1,25 @@
 syntax = "proto3";
 package delivery;
+import "delivery/auth.proto";
 import "delivery/entry_filter.proto";
 
-message GetEntriesRequest {
+message GetEntryRequest {
 	string type = 1;
-	string tenant_id = 2;
+	AuthData auth = 2;
 	string id = 3;
-	int32 limit = 4;
-	int32 page = 5;
-	bool returnEmptyDataIfNotFound = 6;
+	EntryFilter filter = 4;
+	bool returnEmptyDataIfNotFound = 5;
+}
+
+message GetEntryListRequest {
+	string type = 1;
+	AuthData auth = 2;
+	int64 limit = 3;
+	int64 page = 4;
 	EntryFilter filter = 7;
 	repeated EntryOrder order = 8;
 }
+
 
 message EntryOrder {
 	string field = 1;
@@ -22,8 +30,13 @@ message Entry {
 	map<string, string> data = 1;
 }
 
-message GetEntriesResponse {
+message GetEntryResponse {
+	Entry result = 1;
+}
+
+message GetEntryListResponse {
 	repeated Entry result = 1;
-	int32 limit = 2;
-	int32 page = 3;
+	int64 limit = 2;
+	int64 page = 3;
+	int64 total = 4;
 }
