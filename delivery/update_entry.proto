@@ -1,6 +1,6 @@
 syntax = "proto3";
 package delivery;
-import "delivery/shared.proto";
+import "delivery/shared_crud.proto";
 
 message UpdateEntryRequest {
 	string type = 1;

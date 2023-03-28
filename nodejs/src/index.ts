@@ -22,7 +22,7 @@ export {
     EntryFilter_FieldsEntry,
     EntryFieldFilter,
     CrudEventMetadata,
-} from "./delivery/shared";
+} from "./delivery/shared_crud";
 
 export {
     CreateEntryRequest,
