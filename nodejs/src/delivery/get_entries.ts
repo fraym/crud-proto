@@ -1,13 +1,13 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { AuthData, EntryFilter } from "./shared_crud";
+import { CrudAuthData, EntryFilter } from "./shared";
 
 export const protobufPackage = "delivery";
 
 export interface GetEntryRequest {
   type: string;
-  auth: AuthData | undefined;
+  auth: CrudAuthData | undefined;
   id: string;
   filter: EntryFilter | undefined;
   returnEmptyDataIfNotFound: boolean;
@@ -15,7 +15,7 @@ export interface GetEntryRequest {
 
 export interface GetEntryListRequest {
   type: string;
-  auth: AuthData | undefined;
+  auth: CrudAuthData | undefined;
   limit: number;
   page: number;
   filter: EntryFilter | undefined;
@@ -57,7 +57,7 @@ export const GetEntryRequest = {
       writer.uint32(10).string(message.type);
     }
     if (message.auth !== undefined) {
-      AuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
+      CrudAuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
     }
     if (message.id !== "") {
       writer.uint32(26).string(message.id);
@@ -90,7 +90,7 @@ export const GetEntryRequest = {
             break;
           }
 
-          message.auth = AuthData.decode(reader, reader.uint32());
+          message.auth = CrudAuthData.decode(reader, reader.uint32());
           continue;
         case 3:
           if (tag != 26) {
@@ -125,7 +125,7 @@ export const GetEntryRequest = {
   fromJSON(object: any): GetEntryRequest {
     return {
       type: isSet(object.type) ? String(object.type) : "",
-      auth: isSet(object.auth) ? AuthData.fromJSON(object.auth) : undefined,
+      auth: isSet(object.auth) ? CrudAuthData.fromJSON(object.auth) : undefined,
       id: isSet(object.id) ? String(object.id) : "",
       filter: isSet(object.filter) ? EntryFilter.fromJSON(object.filter) : undefined,
       returnEmptyDataIfNotFound: isSet(object.returnEmptyDataIfNotFound)
@@ -137,7 +137,7 @@ export const GetEntryRequest = {
   toJSON(message: GetEntryRequest): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
-    message.auth !== undefined && (obj.auth = message.auth ? AuthData.toJSON(message.auth) : undefined);
+    message.auth !== undefined && (obj.auth = message.auth ? CrudAuthData.toJSON(message.auth) : undefined);
     message.id !== undefined && (obj.id = message.id);
     message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
     message.returnEmptyDataIfNotFound !== undefined &&
@@ -152,7 +152,9 @@ export const GetEntryRequest = {
   fromPartial(object: DeepPartial<GetEntryRequest>): GetEntryRequest {
     const message = createBaseGetEntryRequest();
     message.type = object.type ?? "";
-    message.auth = (object.auth !== undefined && object.auth !== null) ? AuthData.fromPartial(object.auth) : undefined;
+    message.auth = (object.auth !== undefined && object.auth !== null)
+      ? CrudAuthData.fromPartial(object.auth)
+      : undefined;
     message.id = object.id ?? "";
     message.filter = (object.filter !== undefined && object.filter !== null)
       ? EntryFilter.fromPartial(object.filter)
@@ -172,7 +174,7 @@ export const GetEntryListRequest = {
       writer.uint32(10).string(message.type);
     }
     if (message.auth !== undefined) {
-      AuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
+      CrudAuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
     }
     if (message.limit !== 0) {
       writer.uint32(24).int64(message.limit);
@@ -208,7 +210,7 @@ export const GetEntryListRequest = {
             break;
           }
 
-          message.auth = AuthData.decode(reader, reader.uint32());
+          message.auth = CrudAuthData.decode(reader, reader.uint32());
           continue;
         case 3:
           if (tag != 24) {
@@ -250,7 +252,7 @@ export const GetEntryListRequest = {
   fromJSON(object: any): GetEntryListRequest {
     return {
       type: isSet(object.type) ? String(object.type) : "",
-      auth: isSet(object.auth) ? AuthData.fromJSON(object.auth) : undefined,
+      auth: isSet(object.auth) ? CrudAuthData.fromJSON(object.auth) : undefined,
       limit: isSet(object.limit) ? Number(object.limit) : 0,
       page: isSet(object.page) ? Number(object.page) : 0,
       filter: isSet(object.filter) ? EntryFilter.fromJSON(object.filter) : undefined,
@@ -261,7 +263,7 @@ export const GetEntryListRequest = {
   toJSON(message: GetEntryListRequest): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
-    message.auth !== undefined && (obj.auth = message.auth ? AuthData.toJSON(message.auth) : undefined);
+    message.auth !== undefined && (obj.auth = message.auth ? CrudAuthData.toJSON(message.auth) : undefined);
     message.limit !== undefined && (obj.limit = Math.round(message.limit));
     message.page !== undefined && (obj.page = Math.round(message.page));
     message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
@@ -280,7 +282,9 @@ export const GetEntryListRequest = {
   fromPartial(object: DeepPartial<GetEntryListRequest>): GetEntryListRequest {
     const message = createBaseGetEntryListRequest();
     message.type = object.type ?? "";
-    message.auth = (object.auth !== undefined && object.auth !== null) ? AuthData.fromPartial(object.auth) : undefined;
+    message.auth = (object.auth !== undefined && object.auth !== null)
+      ? CrudAuthData.fromPartial(object.auth)
+      : undefined;
     message.limit = object.limit ?? 0;
     message.page = object.page ?? 0;
     message.filter = (object.filter !== undefined && object.filter !== null)

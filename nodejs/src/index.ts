@@ -16,13 +16,13 @@ export {
 } from "./delivery/get_entries";
 
 export {
-    AuthData,
-    AuthData_DataEntry,
+    CrudAuthData,
+    CrudAuthData_DataEntry,
     EntryFilter,
     EntryFilter_FieldsEntry,
     EntryFieldFilter,
-    EventMetadata,
-} from "./delivery/shared_crud";
+    CrudEventMetadata,
+} from "./delivery/shared";
 
 export {
     CreateEntryRequest,

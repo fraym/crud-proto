@@ -1,16 +1,16 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { AuthData, EntryFilter, EventMetadata } from "./shared_crud";
+import { CrudAuthData, CrudEventMetadata, EntryFilter } from "./shared";
 
 export const protobufPackage = "delivery";
 
 export interface DeleteEntriesRequest {
   type: string;
-  auth: AuthData | undefined;
+  auth: CrudAuthData | undefined;
   id: string;
   filter: EntryFilter | undefined;
-  eventMetadata: EventMetadata | undefined;
+  eventMetadata: CrudEventMetadata | undefined;
 }
 
 export interface DeleteEntriesResponse {
@@ -27,7 +27,7 @@ export const DeleteEntriesRequest = {
       writer.uint32(10).string(message.type);
     }
     if (message.auth !== undefined) {
-      AuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
+      CrudAuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
     }
     if (message.id !== "") {
       writer.uint32(26).string(message.id);
@@ -36,7 +36,7 @@ export const DeleteEntriesRequest = {
       EntryFilter.encode(message.filter, writer.uint32(34).fork()).ldelim();
     }
     if (message.eventMetadata !== undefined) {
-      EventMetadata.encode(message.eventMetadata, writer.uint32(42).fork()).ldelim();
+      CrudEventMetadata.encode(message.eventMetadata, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -60,7 +60,7 @@ export const DeleteEntriesRequest = {
             break;
           }
 
-          message.auth = AuthData.decode(reader, reader.uint32());
+          message.auth = CrudAuthData.decode(reader, reader.uint32());
           continue;
         case 3:
           if (tag != 26) {
@@ -81,7 +81,7 @@ export const DeleteEntriesRequest = {
             break;
           }
 
-          message.eventMetadata = EventMetadata.decode(reader, reader.uint32());
+          message.eventMetadata = CrudEventMetadata.decode(reader, reader.uint32());
           continue;
       }
       if ((tag & 7) == 4 || tag == 0) {
@@ -95,21 +95,21 @@ export const DeleteEntriesRequest = {
   fromJSON(object: any): DeleteEntriesRequest {
     return {
       type: isSet(object.type) ? String(object.type) : "",
-      auth: isSet(object.auth) ? AuthData.fromJSON(object.auth) : undefined,
+      auth: isSet(object.auth) ? CrudAuthData.fromJSON(object.auth) : undefined,
       id: isSet(object.id) ? String(object.id) : "",
       filter: isSet(object.filter) ? EntryFilter.fromJSON(object.filter) : undefined,
-      eventMetadata: isSet(object.eventMetadata) ? EventMetadata.fromJSON(object.eventMetadata) : undefined,
+      eventMetadata: isSet(object.eventMetadata) ? CrudEventMetadata.fromJSON(object.eventMetadata) : undefined,
     };
   },
 
   toJSON(message: DeleteEntriesRequest): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
-    message.auth !== undefined && (obj.auth = message.auth ? AuthData.toJSON(message.auth) : undefined);
+    message.auth !== undefined && (obj.auth = message.auth ? CrudAuthData.toJSON(message.auth) : undefined);
     message.id !== undefined && (obj.id = message.id);
     message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
     message.eventMetadata !== undefined &&
-      (obj.eventMetadata = message.eventMetadata ? EventMetadata.toJSON(message.eventMetadata) : undefined);
+      (obj.eventMetadata = message.eventMetadata ? CrudEventMetadata.toJSON(message.eventMetadata) : undefined);
     return obj;
   },
 
@@ -120,13 +120,15 @@ export const DeleteEntriesRequest = {
   fromPartial(object: DeepPartial<DeleteEntriesRequest>): DeleteEntriesRequest {
     const message = createBaseDeleteEntriesRequest();
     message.type = object.type ?? "";
-    message.auth = (object.auth !== undefined && object.auth !== null) ? AuthData.fromPartial(object.auth) : undefined;
+    message.auth = (object.auth !== undefined && object.auth !== null)
+      ? CrudAuthData.fromPartial(object.auth)
+      : undefined;
     message.id = object.id ?? "";
     message.filter = (object.filter !== undefined && object.filter !== null)
       ? EntryFilter.fromPartial(object.filter)
       : undefined;
     message.eventMetadata = (object.eventMetadata !== undefined && object.eventMetadata !== null)
-      ? EventMetadata.fromPartial(object.eventMetadata)
+      ? CrudEventMetadata.fromPartial(object.eventMetadata)
       : undefined;
     return message;
   },

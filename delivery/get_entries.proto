@@ -1,10 +1,10 @@
 syntax = "proto3";
 package delivery;
-import "delivery/shared_crud.proto";
+import "delivery/shared.proto";
 
 message GetEntryRequest {
 	string type = 1;
-	AuthData auth = 2;
+	CrudAuthData auth = 2;
 	string id = 3;
 	EntryFilter filter = 4;
 	bool returnEmptyDataIfNotFound = 5;
@@ -12,7 +12,7 @@ message GetEntryRequest {
 
 message GetEntryListRequest {
 	string type = 1;
-	AuthData auth = 2;
+	CrudAuthData auth = 2;
 	int64 limit = 3;
 	int64 page = 4;
 	EntryFilter filter = 7;

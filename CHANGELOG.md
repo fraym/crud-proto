@@ -1,3 +1,7 @@
+# v1.0.0-alpha.16
+
+- (bug) Fix naming clash with projections
+
 # v1.0.0-alpha.15
 
 - (bug) Fix naming clash with projections

@@ -1,15 +1,15 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { AuthData, EventMetadata } from "./shared_crud";
+import { CrudAuthData, CrudEventMetadata } from "./shared";
 
 export const protobufPackage = "delivery";
 
 export interface CreateEntryRequest {
   type: string;
-  auth: AuthData | undefined;
+  auth: CrudAuthData | undefined;
   id: string;
   data: { [key: string]: string };
-  eventMetadata: EventMetadata | undefined;
+  eventMetadata: CrudEventMetadata | undefined;
 }
 
 export interface CreateEntryRequest_DataEntry {
@@ -43,7 +43,7 @@ export const CreateEntryRequest = {
       writer.uint32(10).string(message.type);
     }
     if (message.auth !== undefined) {
-      AuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
+      CrudAuthData.encode(message.auth, writer.uint32(18).fork()).ldelim();
     }
     if (message.id !== "") {
       writer.uint32(26).string(message.id);
@@ -52,7 +52,7 @@ export const CreateEntryRequest = {
       CreateEntryRequest_DataEntry.encode({ key: key as any, value }, writer.uint32(34).fork()).ldelim();
     });
     if (message.eventMetadata !== undefined) {
-      EventMetadata.encode(message.eventMetadata, writer.uint32(42).fork()).ldelim();
+      CrudEventMetadata.encode(message.eventMetadata, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -76,7 +76,7 @@ export const CreateEntryRequest = {
             break;
           }
 
-          message.auth = AuthData.decode(reader, reader.uint32());
+          message.auth = CrudAuthData.decode(reader, reader.uint32());
           continue;
         case 3:
           if (tag != 26) {
@@ -100,7 +100,7 @@ export const CreateEntryRequest = {
             break;
           }
 
-          message.eventMetadata = EventMetadata.decode(reader, reader.uint32());
+          message.eventMetadata = CrudEventMetadata.decode(reader, reader.uint32());
           continue;
       }
       if ((tag & 7) == 4 || tag == 0) {
@@ -114,7 +114,7 @@ export const CreateEntryRequest = {
   fromJSON(object: any): CreateEntryRequest {
     return {
       type: isSet(object.type) ? String(object.type) : "",
-      auth: isSet(object.auth) ? AuthData.fromJSON(object.auth) : undefined,
+      auth: isSet(object.auth) ? CrudAuthData.fromJSON(object.auth) : undefined,
       id: isSet(object.id) ? String(object.id) : "",
       data: isObject(object.data)
         ? Object.entries(object.data).reduce<{ [key: string]: string }>((acc, [key, value]) => {
@@ -122,14 +122,14 @@ export const CreateEntryRequest = {
           return acc;
         }, {})
         : {},
-      eventMetadata: isSet(object.eventMetadata) ? EventMetadata.fromJSON(object.eventMetadata) : undefined,
+      eventMetadata: isSet(object.eventMetadata) ? CrudEventMetadata.fromJSON(object.eventMetadata) : undefined,
     };
   },
 
   toJSON(message: CreateEntryRequest): unknown {
     const obj: any = {};
     message.type !== undefined && (obj.type = message.type);
-    message.auth !== undefined && (obj.auth = message.auth ? AuthData.toJSON(message.auth) : undefined);
+    message.auth !== undefined && (obj.auth = message.auth ? CrudAuthData.toJSON(message.auth) : undefined);
     message.id !== undefined && (obj.id = message.id);
     obj.data = {};
     if (message.data) {
@@ -138,7 +138,7 @@ export const CreateEntryRequest = {
       });
     }
     message.eventMetadata !== undefined &&
-      (obj.eventMetadata = message.eventMetadata ? EventMetadata.toJSON(message.eventMetadata) : undefined);
+      (obj.eventMetadata = message.eventMetadata ? CrudEventMetadata.toJSON(message.eventMetadata) : undefined);
     return obj;
   },
 
@@ -149,7 +149,9 @@ export const CreateEntryRequest = {
   fromPartial(object: DeepPartial<CreateEntryRequest>): CreateEntryRequest {
     const message = createBaseCreateEntryRequest();
     message.type = object.type ?? "";
-    message.auth = (object.auth !== undefined && object.auth !== null) ? AuthData.fromPartial(object.auth) : undefined;
+    message.auth = (object.auth !== undefined && object.auth !== null)
+      ? CrudAuthData.fromPartial(object.auth)
+      : undefined;
     message.id = object.id ?? "";
     message.data = Object.entries(object.data ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
       if (value !== undefined) {
@@ -158,7 +160,7 @@ export const CreateEntryRequest = {
       return acc;
     }, {});
     message.eventMetadata = (object.eventMetadata !== undefined && object.eventMetadata !== null)
-      ? EventMetadata.fromPartial(object.eventMetadata)
+      ? CrudEventMetadata.fromPartial(object.eventMetadata)
       : undefined;
     return message;
   },

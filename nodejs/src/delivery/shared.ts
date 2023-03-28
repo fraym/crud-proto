@@ -3,13 +3,13 @@ import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "delivery";
 
-export interface AuthData {
+export interface CrudAuthData {
   tenantId: string;
   scopes: string[];
   data: { [key: string]: string };
 }
 
-export interface AuthData_DataEntry {
+export interface CrudAuthData_DataEntry {
   key: string;
   value: string;
 }
@@ -31,17 +31,17 @@ export interface EntryFieldFilter {
   value: string;
 }
 
-export interface EventMetadata {
+export interface CrudEventMetadata {
   causationId: string;
   correlationId: string;
 }
 
-function createBaseAuthData(): AuthData {
+function createBaseCrudAuthData(): CrudAuthData {
   return { tenantId: "", scopes: [], data: {} };
 }
 
-export const AuthData = {
-  encode(message: AuthData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CrudAuthData = {
+  encode(message: CrudAuthData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.tenantId !== "") {
       writer.uint32(10).string(message.tenantId);
     }
@@ -49,15 +49,15 @@ export const AuthData = {
       writer.uint32(18).string(v!);
     }
     Object.entries(message.data).forEach(([key, value]) => {
-      AuthData_DataEntry.encode({ key: key as any, value }, writer.uint32(26).fork()).ldelim();
+      CrudAuthData_DataEntry.encode({ key: key as any, value }, writer.uint32(26).fork()).ldelim();
     });
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): AuthData {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CrudAuthData {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAuthData();
+    const message = createBaseCrudAuthData();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -80,7 +80,7 @@ export const AuthData = {
             break;
           }
 
-          const entry3 = AuthData_DataEntry.decode(reader, reader.uint32());
+          const entry3 = CrudAuthData_DataEntry.decode(reader, reader.uint32());
           if (entry3.value !== undefined) {
             message.data[entry3.key] = entry3.value;
           }
@@ -94,7 +94,7 @@ export const AuthData = {
     return message;
   },
 
-  fromJSON(object: any): AuthData {
+  fromJSON(object: any): CrudAuthData {
     return {
       tenantId: isSet(object.tenantId) ? String(object.tenantId) : "",
       scopes: Array.isArray(object?.scopes) ? object.scopes.map((e: any) => String(e)) : [],
@@ -107,7 +107,7 @@ export const AuthData = {
     };
   },
 
-  toJSON(message: AuthData): unknown {
+  toJSON(message: CrudAuthData): unknown {
     const obj: any = {};
     message.tenantId !== undefined && (obj.tenantId = message.tenantId);
     if (message.scopes) {
@@ -124,12 +124,12 @@ export const AuthData = {
     return obj;
   },
 
-  create(base?: DeepPartial<AuthData>): AuthData {
-    return AuthData.fromPartial(base ?? {});
+  create(base?: DeepPartial<CrudAuthData>): CrudAuthData {
+    return CrudAuthData.fromPartial(base ?? {});
   },
 
-  fromPartial(object: DeepPartial<AuthData>): AuthData {
-    const message = createBaseAuthData();
+  fromPartial(object: DeepPartial<CrudAuthData>): CrudAuthData {
+    const message = createBaseCrudAuthData();
     message.tenantId = object.tenantId ?? "";
     message.scopes = object.scopes?.map((e) => e) || [];
     message.data = Object.entries(object.data ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
@@ -142,12 +142,12 @@ export const AuthData = {
   },
 };
 
-function createBaseAuthData_DataEntry(): AuthData_DataEntry {
+function createBaseCrudAuthData_DataEntry(): CrudAuthData_DataEntry {
   return { key: "", value: "" };
 }
 
-export const AuthData_DataEntry = {
-  encode(message: AuthData_DataEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CrudAuthData_DataEntry = {
+  encode(message: CrudAuthData_DataEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -157,10 +157,10 @@ export const AuthData_DataEntry = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): AuthData_DataEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CrudAuthData_DataEntry {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAuthData_DataEntry();
+    const message = createBaseCrudAuthData_DataEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -187,23 +187,23 @@ export const AuthData_DataEntry = {
     return message;
   },
 
-  fromJSON(object: any): AuthData_DataEntry {
+  fromJSON(object: any): CrudAuthData_DataEntry {
     return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
   },
 
-  toJSON(message: AuthData_DataEntry): unknown {
+  toJSON(message: CrudAuthData_DataEntry): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  create(base?: DeepPartial<AuthData_DataEntry>): AuthData_DataEntry {
-    return AuthData_DataEntry.fromPartial(base ?? {});
+  create(base?: DeepPartial<CrudAuthData_DataEntry>): CrudAuthData_DataEntry {
+    return CrudAuthData_DataEntry.fromPartial(base ?? {});
   },
 
-  fromPartial(object: DeepPartial<AuthData_DataEntry>): AuthData_DataEntry {
-    const message = createBaseAuthData_DataEntry();
+  fromPartial(object: DeepPartial<CrudAuthData_DataEntry>): CrudAuthData_DataEntry {
+    const message = createBaseCrudAuthData_DataEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? "";
     return message;
@@ -480,12 +480,12 @@ export const EntryFieldFilter = {
   },
 };
 
-function createBaseEventMetadata(): EventMetadata {
+function createBaseCrudEventMetadata(): CrudEventMetadata {
   return { causationId: "", correlationId: "" };
 }
 
-export const EventMetadata = {
-  encode(message: EventMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const CrudEventMetadata = {
+  encode(message: CrudEventMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.causationId !== "") {
       writer.uint32(10).string(message.causationId);
     }
@@ -495,10 +495,10 @@ export const EventMetadata = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): EventMetadata {
+  decode(input: _m0.Reader | Uint8Array, length?: number): CrudEventMetadata {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseEventMetadata();
+    const message = createBaseCrudEventMetadata();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -525,26 +525,26 @@ export const EventMetadata = {
     return message;
   },
 
-  fromJSON(object: any): EventMetadata {
+  fromJSON(object: any): CrudEventMetadata {
     return {
       causationId: isSet(object.causationId) ? String(object.causationId) : "",
       correlationId: isSet(object.correlationId) ? String(object.correlationId) : "",
     };
   },
 
-  toJSON(message: EventMetadata): unknown {
+  toJSON(message: CrudEventMetadata): unknown {
     const obj: any = {};
     message.causationId !== undefined && (obj.causationId = message.causationId);
     message.correlationId !== undefined && (obj.correlationId = message.correlationId);
     return obj;
   },
 
-  create(base?: DeepPartial<EventMetadata>): EventMetadata {
-    return EventMetadata.fromPartial(base ?? {});
+  create(base?: DeepPartial<CrudEventMetadata>): CrudEventMetadata {
+    return CrudEventMetadata.fromPartial(base ?? {});
   },
 
-  fromPartial(object: DeepPartial<EventMetadata>): EventMetadata {
-    const message = createBaseEventMetadata();
+  fromPartial(object: DeepPartial<CrudEventMetadata>): CrudEventMetadata {
+    const message = createBaseCrudEventMetadata();
     message.causationId = object.causationId ?? "";
     message.correlationId = object.correlationId ?? "";
     return message;
