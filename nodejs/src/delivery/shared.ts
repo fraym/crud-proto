@@ -3,6 +3,17 @@ import _m0 from "protobufjs/minimal";
 
 export const protobufPackage = "delivery";
 
+export interface AuthData {
+  tenantId: string;
+  scopes: string[];
+  data: { [key: string]: string };
+}
+
+export interface AuthData_DataEntry {
+  key: string;
+  value: string;
+}
+
 export interface EntryFilter {
   fields: { [key: string]: EntryFieldFilter };
   and: EntryFilter[];
@@ -19,6 +30,185 @@ export interface EntryFieldFilter {
   operation: string;
   value: string;
 }
+
+export interface EventMetadata {
+  causationId: string;
+  correlationId: string;
+}
+
+function createBaseAuthData(): AuthData {
+  return { tenantId: "", scopes: [], data: {} };
+}
+
+export const AuthData = {
+  encode(message: AuthData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.tenantId !== "") {
+      writer.uint32(10).string(message.tenantId);
+    }
+    for (const v of message.scopes) {
+      writer.uint32(18).string(v!);
+    }
+    Object.entries(message.data).forEach(([key, value]) => {
+      AuthData_DataEntry.encode({ key: key as any, value }, writer.uint32(26).fork()).ldelim();
+    });
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): AuthData {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseAuthData();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.tenantId = reader.string();
+          continue;
+        case 2:
+          if (tag != 18) {
+            break;
+          }
+
+          message.scopes.push(reader.string());
+          continue;
+        case 3:
+          if (tag != 26) {
+            break;
+          }
+
+          const entry3 = AuthData_DataEntry.decode(reader, reader.uint32());
+          if (entry3.value !== undefined) {
+            message.data[entry3.key] = entry3.value;
+          }
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): AuthData {
+    return {
+      tenantId: isSet(object.tenantId) ? String(object.tenantId) : "",
+      scopes: Array.isArray(object?.scopes) ? object.scopes.map((e: any) => String(e)) : [],
+      data: isObject(object.data)
+        ? Object.entries(object.data).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        }, {})
+        : {},
+    };
+  },
+
+  toJSON(message: AuthData): unknown {
+    const obj: any = {};
+    message.tenantId !== undefined && (obj.tenantId = message.tenantId);
+    if (message.scopes) {
+      obj.scopes = message.scopes.map((e) => e);
+    } else {
+      obj.scopes = [];
+    }
+    obj.data = {};
+    if (message.data) {
+      Object.entries(message.data).forEach(([k, v]) => {
+        obj.data[k] = v;
+      });
+    }
+    return obj;
+  },
+
+  create(base?: DeepPartial<AuthData>): AuthData {
+    return AuthData.fromPartial(base ?? {});
+  },
+
+  fromPartial(object: DeepPartial<AuthData>): AuthData {
+    const message = createBaseAuthData();
+    message.tenantId = object.tenantId ?? "";
+    message.scopes = object.scopes?.map((e) => e) || [];
+    message.data = Object.entries(object.data ?? {}).reduce<{ [key: string]: string }>((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {});
+    return message;
+  },
+};
+
+function createBaseAuthData_DataEntry(): AuthData_DataEntry {
+  return { key: "", value: "" };
+}
+
+export const AuthData_DataEntry = {
+  encode(message: AuthData_DataEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value !== "") {
+      writer.uint32(18).string(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): AuthData_DataEntry {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseAuthData_DataEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.key = reader.string();
+          continue;
+        case 2:
+          if (tag != 18) {
+            break;
+          }
+
+          message.value = reader.string();
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): AuthData_DataEntry {
+    return { key: isSet(object.key) ? String(object.key) : "", value: isSet(object.value) ? String(object.value) : "" };
+  },
+
+  toJSON(message: AuthData_DataEntry): unknown {
+    const obj: any = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+
+  create(base?: DeepPartial<AuthData_DataEntry>): AuthData_DataEntry {
+    return AuthData_DataEntry.fromPartial(base ?? {});
+  },
+
+  fromPartial(object: DeepPartial<AuthData_DataEntry>): AuthData_DataEntry {
+    const message = createBaseAuthData_DataEntry();
+    message.key = object.key ?? "";
+    message.value = object.value ?? "";
+    return message;
+  },
+};
 
 function createBaseEntryFilter(): EntryFilter {
   return { fields: {}, and: [], or: [] };
@@ -286,6 +476,77 @@ export const EntryFieldFilter = {
     message.type = object.type ?? "";
     message.operation = object.operation ?? "";
     message.value = object.value ?? "";
+    return message;
+  },
+};
+
+function createBaseEventMetadata(): EventMetadata {
+  return { causationId: "", correlationId: "" };
+}
+
+export const EventMetadata = {
+  encode(message: EventMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.causationId !== "") {
+      writer.uint32(10).string(message.causationId);
+    }
+    if (message.correlationId !== "") {
+      writer.uint32(18).string(message.correlationId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): EventMetadata {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseEventMetadata();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.causationId = reader.string();
+          continue;
+        case 2:
+          if (tag != 18) {
+            break;
+          }
+
+          message.correlationId = reader.string();
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): EventMetadata {
+    return {
+      causationId: isSet(object.causationId) ? String(object.causationId) : "",
+      correlationId: isSet(object.correlationId) ? String(object.correlationId) : "",
+    };
+  },
+
+  toJSON(message: EventMetadata): unknown {
+    const obj: any = {};
+    message.causationId !== undefined && (obj.causationId = message.causationId);
+    message.correlationId !== undefined && (obj.correlationId = message.correlationId);
+    return obj;
+  },
+
+  create(base?: DeepPartial<EventMetadata>): EventMetadata {
+    return EventMetadata.fromPartial(base ?? {});
+  },
+
+  fromPartial(object: DeepPartial<EventMetadata>): EventMetadata {
+    const message = createBaseEventMetadata();
+    message.causationId = object.causationId ?? "";
+    message.correlationId = object.correlationId ?? "";
     return message;
   },
 };

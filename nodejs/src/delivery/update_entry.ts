@@ -1,6 +1,6 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { AuthData } from "./auth";
+import { AuthData, EventMetadata } from "./shared";
 
 export const protobufPackage = "delivery";
 
@@ -9,6 +9,7 @@ export interface UpdateEntryRequest {
   auth: AuthData | undefined;
   id: string;
   data: { [key: string]: string };
+  eventMetadata: EventMetadata | undefined;
 }
 
 export interface UpdateEntryRequest_DataEntry {
@@ -33,7 +34,7 @@ export interface UpdateEntryResponse_FieldValidationErrorsEntry {
 }
 
 function createBaseUpdateEntryRequest(): UpdateEntryRequest {
-  return { type: "", auth: undefined, id: "", data: {} };
+  return { type: "", auth: undefined, id: "", data: {}, eventMetadata: undefined };
 }
 
 export const UpdateEntryRequest = {
@@ -50,6 +51,9 @@ export const UpdateEntryRequest = {
     Object.entries(message.data).forEach(([key, value]) => {
       UpdateEntryRequest_DataEntry.encode({ key: key as any, value }, writer.uint32(34).fork()).ldelim();
     });
+    if (message.eventMetadata !== undefined) {
+      EventMetadata.encode(message.eventMetadata, writer.uint32(42).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -91,6 +95,13 @@ export const UpdateEntryRequest = {
             message.data[entry4.key] = entry4.value;
           }
           continue;
+        case 5:
+          if (tag != 42) {
+            break;
+          }
+
+          message.eventMetadata = EventMetadata.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) == 4 || tag == 0) {
         break;
@@ -111,6 +122,7 @@ export const UpdateEntryRequest = {
           return acc;
         }, {})
         : {},
+      eventMetadata: isSet(object.eventMetadata) ? EventMetadata.fromJSON(object.eventMetadata) : undefined,
     };
   },
 
@@ -125,6 +137,8 @@ export const UpdateEntryRequest = {
         obj.data[k] = v;
       });
     }
+    message.eventMetadata !== undefined &&
+      (obj.eventMetadata = message.eventMetadata ? EventMetadata.toJSON(message.eventMetadata) : undefined);
     return obj;
   },
 
@@ -143,6 +157,9 @@ export const UpdateEntryRequest = {
       }
       return acc;
     }, {});
+    message.eventMetadata = (object.eventMetadata !== undefined && object.eventMetadata !== null)
+      ? EventMetadata.fromPartial(object.eventMetadata)
+      : undefined;
     return message;
   },
 };

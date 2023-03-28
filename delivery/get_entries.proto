@@ -1,7 +1,6 @@
 syntax = "proto3";
 package delivery;
-import "delivery/auth.proto";
-import "delivery/entry_filter.proto";
+import "delivery/shared.proto";
 
 message GetEntryRequest {
 	string type = 1;

@@ -1,8 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { AuthData } from "./auth";
-import { EntryFilter } from "./entry_filter";
+import { AuthData, EntryFilter } from "./shared";
 
 export const protobufPackage = "delivery";
 

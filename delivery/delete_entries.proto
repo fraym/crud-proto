@@ -1,13 +1,13 @@
 syntax = "proto3";
 package delivery;
-import "delivery/auth.proto";
-import "delivery/entry_filter.proto";
+import "delivery/shared.proto";
 
 message DeleteEntriesRequest {
 	string type = 1;
 	AuthData auth = 2;
 	string id = 3;
 	EntryFilter filter = 4;
+	EventMetadata eventMetadata = 5;
 }
 
 message DeleteEntriesResponse {

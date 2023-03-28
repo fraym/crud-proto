@@ -1,3 +1,7 @@
+# v1.0.0-alpha.14
+
+- (feature) Specify correlation and causation ids
+
 # v1.0.0-alpha.13
 
 - (bc) Use int64 instead of int32 for pagination

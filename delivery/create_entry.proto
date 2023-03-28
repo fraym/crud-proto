@@ -1,12 +1,13 @@
 syntax = "proto3";
 package delivery;
-import "delivery/auth.proto";
+import "delivery/shared.proto";
 
 message CreateEntryRequest {
 	string type = 1;
 	AuthData auth = 2;
 	string id = 3;
 	map<string, string> data = 4;
+	EventMetadata eventMetadata = 5;
 }
 
 message CreateEntryResponse {

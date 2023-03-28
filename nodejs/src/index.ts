@@ -15,9 +15,14 @@ export {
     EntryOrder,
 } from "./delivery/get_entries";
 
-export { AuthData, AuthData_DataEntry } from "./delivery/auth";
-
-export { EntryFilter, EntryFilter_FieldsEntry, EntryFieldFilter } from "./delivery/entry_filter";
+export {
+    AuthData,
+    AuthData_DataEntry,
+    EntryFilter,
+    EntryFilter_FieldsEntry,
+    EntryFieldFilter,
+    EventMetadata,
+} from "./delivery/shared";
 
 export {
     CreateEntryRequest,

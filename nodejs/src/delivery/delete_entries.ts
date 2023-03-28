@@ -1,8 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { AuthData } from "./auth";
-import { EntryFilter } from "./entry_filter";
+import { AuthData, EntryFilter, EventMetadata } from "./shared";
 
 export const protobufPackage = "delivery";
 
@@ -11,6 +10,7 @@ export interface DeleteEntriesRequest {
   auth: AuthData | undefined;
   id: string;
   filter: EntryFilter | undefined;
+  eventMetadata: EventMetadata | undefined;
 }
 
 export interface DeleteEntriesResponse {
@@ -18,7 +18,7 @@ export interface DeleteEntriesResponse {
 }
 
 function createBaseDeleteEntriesRequest(): DeleteEntriesRequest {
-  return { type: "", auth: undefined, id: "", filter: undefined };
+  return { type: "", auth: undefined, id: "", filter: undefined, eventMetadata: undefined };
 }
 
 export const DeleteEntriesRequest = {
@@ -34,6 +34,9 @@ export const DeleteEntriesRequest = {
     }
     if (message.filter !== undefined) {
       EntryFilter.encode(message.filter, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.eventMetadata !== undefined) {
+      EventMetadata.encode(message.eventMetadata, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -73,6 +76,13 @@ export const DeleteEntriesRequest = {
 
           message.filter = EntryFilter.decode(reader, reader.uint32());
           continue;
+        case 5:
+          if (tag != 42) {
+            break;
+          }
+
+          message.eventMetadata = EventMetadata.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) == 4 || tag == 0) {
         break;
@@ -88,6 +98,7 @@ export const DeleteEntriesRequest = {
       auth: isSet(object.auth) ? AuthData.fromJSON(object.auth) : undefined,
       id: isSet(object.id) ? String(object.id) : "",
       filter: isSet(object.filter) ? EntryFilter.fromJSON(object.filter) : undefined,
+      eventMetadata: isSet(object.eventMetadata) ? EventMetadata.fromJSON(object.eventMetadata) : undefined,
     };
   },
 
@@ -97,6 +108,8 @@ export const DeleteEntriesRequest = {
     message.auth !== undefined && (obj.auth = message.auth ? AuthData.toJSON(message.auth) : undefined);
     message.id !== undefined && (obj.id = message.id);
     message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
+    message.eventMetadata !== undefined &&
+      (obj.eventMetadata = message.eventMetadata ? EventMetadata.toJSON(message.eventMetadata) : undefined);
     return obj;
   },
 
@@ -111,6 +124,9 @@ export const DeleteEntriesRequest = {
     message.id = object.id ?? "";
     message.filter = (object.filter !== undefined && object.filter !== null)
       ? EntryFilter.fromPartial(object.filter)
+      : undefined;
+    message.eventMetadata = (object.eventMetadata !== undefined && object.eventMetadata !== null)
+      ? EventMetadata.fromPartial(object.eventMetadata)
       : undefined;
     return message;
   },
