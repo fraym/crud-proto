@@ -1,6 +1,6 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { AuthData, EventMetadata } from "./shared";
+import { AuthData, EventMetadata } from "./shared_crud";
 
 export const protobufPackage = "delivery";
 
