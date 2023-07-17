@@ -30,14 +30,14 @@ export const CreateTypesRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.schema = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -51,7 +51,9 @@ export const CreateTypesRequest = {
 
   toJSON(message: CreateTypesRequest): unknown {
     const obj: any = {};
-    message.schema !== undefined && (obj.schema = message.schema);
+    if (message.schema !== "") {
+      obj.schema = message.schema;
+    }
     return obj;
   },
 
@@ -83,7 +85,7 @@ export const CreateTypesResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);

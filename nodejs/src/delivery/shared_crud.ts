@@ -62,21 +62,21 @@ export const CrudAuthData = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.tenantId = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.scopes.push(reader.string());
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
@@ -86,7 +86,7 @@ export const CrudAuthData = {
           }
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -109,17 +109,20 @@ export const CrudAuthData = {
 
   toJSON(message: CrudAuthData): unknown {
     const obj: any = {};
-    message.tenantId !== undefined && (obj.tenantId = message.tenantId);
-    if (message.scopes) {
-      obj.scopes = message.scopes.map((e) => e);
-    } else {
-      obj.scopes = [];
+    if (message.tenantId !== "") {
+      obj.tenantId = message.tenantId;
     }
-    obj.data = {};
+    if (message.scopes?.length) {
+      obj.scopes = message.scopes;
+    }
     if (message.data) {
-      Object.entries(message.data).forEach(([k, v]) => {
-        obj.data[k] = v;
-      });
+      const entries = Object.entries(message.data);
+      if (entries.length > 0) {
+        obj.data = {};
+        entries.forEach(([k, v]) => {
+          obj.data[k] = v;
+        });
+      }
     }
     return obj;
   },
@@ -165,21 +168,21 @@ export const CrudAuthData_DataEntry = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.key = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.value = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -193,8 +196,12 @@ export const CrudAuthData_DataEntry = {
 
   toJSON(message: CrudAuthData_DataEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
@@ -236,7 +243,7 @@ export const EntryFilter = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
@@ -246,21 +253,21 @@ export const EntryFilter = {
           }
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.and.push(EntryFilter.decode(reader, reader.uint32()));
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
           message.or.push(EntryFilter.decode(reader, reader.uint32()));
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -283,21 +290,20 @@ export const EntryFilter = {
 
   toJSON(message: EntryFilter): unknown {
     const obj: any = {};
-    obj.fields = {};
     if (message.fields) {
-      Object.entries(message.fields).forEach(([k, v]) => {
-        obj.fields[k] = EntryFieldFilter.toJSON(v);
-      });
+      const entries = Object.entries(message.fields);
+      if (entries.length > 0) {
+        obj.fields = {};
+        entries.forEach(([k, v]) => {
+          obj.fields[k] = EntryFieldFilter.toJSON(v);
+        });
+      }
     }
-    if (message.and) {
-      obj.and = message.and.map((e) => e ? EntryFilter.toJSON(e) : undefined);
-    } else {
-      obj.and = [];
+    if (message.and?.length) {
+      obj.and = message.and.map((e) => EntryFilter.toJSON(e));
     }
-    if (message.or) {
-      obj.or = message.or.map((e) => e ? EntryFilter.toJSON(e) : undefined);
-    } else {
-      obj.or = [];
+    if (message.or?.length) {
+      obj.or = message.or.map((e) => EntryFilter.toJSON(e));
     }
     return obj;
   },
@@ -346,21 +352,21 @@ export const EntryFilter_FieldsEntry = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.key = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.value = EntryFieldFilter.decode(reader, reader.uint32());
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -377,8 +383,12 @@ export const EntryFilter_FieldsEntry = {
 
   toJSON(message: EntryFilter_FieldsEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value ? EntryFieldFilter.toJSON(message.value) : undefined);
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== undefined) {
+      obj.value = EntryFieldFilter.toJSON(message.value);
+    }
     return obj;
   },
 
@@ -422,28 +432,28 @@ export const EntryFieldFilter = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.type = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.operation = reader.string();
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
           message.value = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -461,9 +471,15 @@ export const EntryFieldFilter = {
 
   toJSON(message: EntryFieldFilter): unknown {
     const obj: any = {};
-    message.type !== undefined && (obj.type = message.type);
-    message.operation !== undefined && (obj.operation = message.operation);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
+    if (message.operation !== "") {
+      obj.operation = message.operation;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
@@ -503,21 +519,21 @@ export const CrudEventMetadata = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.causationId = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.correlationId = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -534,8 +550,12 @@ export const CrudEventMetadata = {
 
   toJSON(message: CrudEventMetadata): unknown {
     const obj: any = {};
-    message.causationId !== undefined && (obj.causationId = message.causationId);
-    message.correlationId !== undefined && (obj.correlationId = message.correlationId);
+    if (message.causationId !== "") {
+      obj.causationId = message.causationId;
+    }
+    if (message.correlationId !== "") {
+      obj.correlationId = message.correlationId;
+    }
     return obj;
   },
 

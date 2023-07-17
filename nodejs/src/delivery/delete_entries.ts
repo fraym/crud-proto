@@ -49,42 +49,42 @@ export const DeleteEntriesRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.type = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.auth = CrudAuthData.decode(reader, reader.uint32());
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
           message.id = reader.string();
           continue;
         case 4:
-          if (tag != 34) {
+          if (tag !== 34) {
             break;
           }
 
           message.filter = EntryFilter.decode(reader, reader.uint32());
           continue;
         case 5:
-          if (tag != 42) {
+          if (tag !== 42) {
             break;
           }
 
           message.eventMetadata = CrudEventMetadata.decode(reader, reader.uint32());
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -104,12 +104,21 @@ export const DeleteEntriesRequest = {
 
   toJSON(message: DeleteEntriesRequest): unknown {
     const obj: any = {};
-    message.type !== undefined && (obj.type = message.type);
-    message.auth !== undefined && (obj.auth = message.auth ? CrudAuthData.toJSON(message.auth) : undefined);
-    message.id !== undefined && (obj.id = message.id);
-    message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
-    message.eventMetadata !== undefined &&
-      (obj.eventMetadata = message.eventMetadata ? CrudEventMetadata.toJSON(message.eventMetadata) : undefined);
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
+    if (message.auth !== undefined) {
+      obj.auth = CrudAuthData.toJSON(message.auth);
+    }
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.filter !== undefined) {
+      obj.filter = EntryFilter.toJSON(message.filter);
+    }
+    if (message.eventMetadata !== undefined) {
+      obj.eventMetadata = CrudEventMetadata.toJSON(message.eventMetadata);
+    }
     return obj;
   },
 
@@ -154,14 +163,14 @@ export const DeleteEntriesResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 8) {
+          if (tag !== 8) {
             break;
           }
 
           message.numberOfDeletedEntries = longToNumber(reader.int64() as Long);
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -175,8 +184,9 @@ export const DeleteEntriesResponse = {
 
   toJSON(message: DeleteEntriesResponse): unknown {
     const obj: any = {};
-    message.numberOfDeletedEntries !== undefined &&
-      (obj.numberOfDeletedEntries = Math.round(message.numberOfDeletedEntries));
+    if (message.numberOfDeletedEntries !== 0) {
+      obj.numberOfDeletedEntries = Math.round(message.numberOfDeletedEntries);
+    }
     return obj;
   },
 
@@ -191,10 +201,10 @@ export const DeleteEntriesResponse = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }

@@ -65,28 +65,28 @@ export const CreateEntryRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.type = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.auth = CrudAuthData.decode(reader, reader.uint32());
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
           message.id = reader.string();
           continue;
         case 4:
-          if (tag != 34) {
+          if (tag !== 34) {
             break;
           }
 
@@ -96,14 +96,14 @@ export const CreateEntryRequest = {
           }
           continue;
         case 5:
-          if (tag != 42) {
+          if (tag !== 42) {
             break;
           }
 
           message.eventMetadata = CrudEventMetadata.decode(reader, reader.uint32());
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -128,17 +128,27 @@ export const CreateEntryRequest = {
 
   toJSON(message: CreateEntryRequest): unknown {
     const obj: any = {};
-    message.type !== undefined && (obj.type = message.type);
-    message.auth !== undefined && (obj.auth = message.auth ? CrudAuthData.toJSON(message.auth) : undefined);
-    message.id !== undefined && (obj.id = message.id);
-    obj.data = {};
-    if (message.data) {
-      Object.entries(message.data).forEach(([k, v]) => {
-        obj.data[k] = v;
-      });
+    if (message.type !== "") {
+      obj.type = message.type;
     }
-    message.eventMetadata !== undefined &&
-      (obj.eventMetadata = message.eventMetadata ? CrudEventMetadata.toJSON(message.eventMetadata) : undefined);
+    if (message.auth !== undefined) {
+      obj.auth = CrudAuthData.toJSON(message.auth);
+    }
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.data) {
+      const entries = Object.entries(message.data);
+      if (entries.length > 0) {
+        obj.data = {};
+        entries.forEach(([k, v]) => {
+          obj.data[k] = v;
+        });
+      }
+    }
+    if (message.eventMetadata !== undefined) {
+      obj.eventMetadata = CrudEventMetadata.toJSON(message.eventMetadata);
+    }
     return obj;
   },
 
@@ -189,21 +199,21 @@ export const CreateEntryRequest_DataEntry = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.key = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.value = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -217,8 +227,12 @@ export const CreateEntryRequest_DataEntry = {
 
   toJSON(message: CreateEntryRequest_DataEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
@@ -261,7 +275,7 @@ export const CreateEntryResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
@@ -271,14 +285,14 @@ export const CreateEntryResponse = {
           }
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.validationErrors.push(reader.string());
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
@@ -288,7 +302,7 @@ export const CreateEntryResponse = {
           }
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -318,22 +332,26 @@ export const CreateEntryResponse = {
 
   toJSON(message: CreateEntryResponse): unknown {
     const obj: any = {};
-    obj.newData = {};
     if (message.newData) {
-      Object.entries(message.newData).forEach(([k, v]) => {
-        obj.newData[k] = v;
-      });
+      const entries = Object.entries(message.newData);
+      if (entries.length > 0) {
+        obj.newData = {};
+        entries.forEach(([k, v]) => {
+          obj.newData[k] = v;
+        });
+      }
     }
-    if (message.validationErrors) {
-      obj.validationErrors = message.validationErrors.map((e) => e);
-    } else {
-      obj.validationErrors = [];
+    if (message.validationErrors?.length) {
+      obj.validationErrors = message.validationErrors;
     }
-    obj.fieldValidationErrors = {};
     if (message.fieldValidationErrors) {
-      Object.entries(message.fieldValidationErrors).forEach(([k, v]) => {
-        obj.fieldValidationErrors[k] = v;
-      });
+      const entries = Object.entries(message.fieldValidationErrors);
+      if (entries.length > 0) {
+        obj.fieldValidationErrors = {};
+        entries.forEach(([k, v]) => {
+          obj.fieldValidationErrors[k] = v;
+        });
+      }
     }
     return obj;
   },
@@ -386,21 +404,21 @@ export const CreateEntryResponse_NewDataEntry = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.key = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.value = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -414,8 +432,12 @@ export const CreateEntryResponse_NewDataEntry = {
 
   toJSON(message: CreateEntryResponse_NewDataEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
@@ -457,21 +479,21 @@ export const CreateEntryResponse_FieldValidationErrorsEntry = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.key = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.value = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -485,8 +507,12 @@ export const CreateEntryResponse_FieldValidationErrorsEntry = {
 
   toJSON(message: CreateEntryResponse_FieldValidationErrorsEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 

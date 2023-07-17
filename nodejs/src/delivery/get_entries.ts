@@ -88,49 +88,49 @@ export const GetEntryRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.type = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.auth = CrudAuthData.decode(reader, reader.uint32());
           continue;
         case 3:
-          if (tag != 26) {
+          if (tag !== 26) {
             break;
           }
 
           message.id = reader.string();
           continue;
         case 4:
-          if (tag != 34) {
+          if (tag !== 34) {
             break;
           }
 
           message.filter = EntryFilter.decode(reader, reader.uint32());
           continue;
         case 5:
-          if (tag != 40) {
+          if (tag !== 40) {
             break;
           }
 
           message.returnEmptyDataIfNotFound = reader.bool();
           continue;
         case 6:
-          if (tag != 50) {
+          if (tag !== 50) {
             break;
           }
 
           message.wait = EntryWait.decode(reader, reader.uint32());
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -153,13 +153,24 @@ export const GetEntryRequest = {
 
   toJSON(message: GetEntryRequest): unknown {
     const obj: any = {};
-    message.type !== undefined && (obj.type = message.type);
-    message.auth !== undefined && (obj.auth = message.auth ? CrudAuthData.toJSON(message.auth) : undefined);
-    message.id !== undefined && (obj.id = message.id);
-    message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
-    message.returnEmptyDataIfNotFound !== undefined &&
-      (obj.returnEmptyDataIfNotFound = message.returnEmptyDataIfNotFound);
-    message.wait !== undefined && (obj.wait = message.wait ? EntryWait.toJSON(message.wait) : undefined);
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
+    if (message.auth !== undefined) {
+      obj.auth = CrudAuthData.toJSON(message.auth);
+    }
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.filter !== undefined) {
+      obj.filter = EntryFilter.toJSON(message.filter);
+    }
+    if (message.returnEmptyDataIfNotFound === true) {
+      obj.returnEmptyDataIfNotFound = message.returnEmptyDataIfNotFound;
+    }
+    if (message.wait !== undefined) {
+      obj.wait = EntryWait.toJSON(message.wait);
+    }
     return obj;
   },
 
@@ -218,49 +229,49 @@ export const GetEntryListRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.type = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.auth = CrudAuthData.decode(reader, reader.uint32());
           continue;
         case 3:
-          if (tag != 24) {
+          if (tag !== 24) {
             break;
           }
 
           message.limit = longToNumber(reader.int64() as Long);
           continue;
         case 4:
-          if (tag != 32) {
+          if (tag !== 32) {
             break;
           }
 
           message.page = longToNumber(reader.int64() as Long);
           continue;
         case 7:
-          if (tag != 58) {
+          if (tag !== 58) {
             break;
           }
 
           message.filter = EntryFilter.decode(reader, reader.uint32());
           continue;
         case 8:
-          if (tag != 66) {
+          if (tag !== 66) {
             break;
           }
 
           message.order.push(EntryOrder.decode(reader, reader.uint32()));
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -281,15 +292,23 @@ export const GetEntryListRequest = {
 
   toJSON(message: GetEntryListRequest): unknown {
     const obj: any = {};
-    message.type !== undefined && (obj.type = message.type);
-    message.auth !== undefined && (obj.auth = message.auth ? CrudAuthData.toJSON(message.auth) : undefined);
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.page !== undefined && (obj.page = Math.round(message.page));
-    message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
-    if (message.order) {
-      obj.order = message.order.map((e) => e ? EntryOrder.toJSON(e) : undefined);
-    } else {
-      obj.order = [];
+    if (message.type !== "") {
+      obj.type = message.type;
+    }
+    if (message.auth !== undefined) {
+      obj.auth = CrudAuthData.toJSON(message.auth);
+    }
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.page !== 0) {
+      obj.page = Math.round(message.page);
+    }
+    if (message.filter !== undefined) {
+      obj.filter = EntryFilter.toJSON(message.filter);
+    }
+    if (message.order?.length) {
+      obj.order = message.order.map((e) => EntryOrder.toJSON(e));
     }
     return obj;
   },
@@ -337,21 +356,21 @@ export const EntryWait = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.conditionFilter = EntryFilter.decode(reader, reader.uint32());
           continue;
         case 2:
-          if (tag != 16) {
+          if (tag !== 16) {
             break;
           }
 
           message.timeout = longToNumber(reader.int64() as Long);
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -368,9 +387,12 @@ export const EntryWait = {
 
   toJSON(message: EntryWait): unknown {
     const obj: any = {};
-    message.conditionFilter !== undefined &&
-      (obj.conditionFilter = message.conditionFilter ? EntryFilter.toJSON(message.conditionFilter) : undefined);
-    message.timeout !== undefined && (obj.timeout = Math.round(message.timeout));
+    if (message.conditionFilter !== undefined) {
+      obj.conditionFilter = EntryFilter.toJSON(message.conditionFilter);
+    }
+    if (message.timeout !== 0) {
+      obj.timeout = Math.round(message.timeout);
+    }
     return obj;
   },
 
@@ -411,21 +433,21 @@ export const EntryOrder = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.field = reader.string();
           continue;
         case 2:
-          if (tag != 16) {
+          if (tag !== 16) {
             break;
           }
 
           message.descending = reader.bool();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -442,8 +464,12 @@ export const EntryOrder = {
 
   toJSON(message: EntryOrder): unknown {
     const obj: any = {};
-    message.field !== undefined && (obj.field = message.field);
-    message.descending !== undefined && (obj.descending = message.descending);
+    if (message.field !== "") {
+      obj.field = message.field;
+    }
+    if (message.descending === true) {
+      obj.descending = message.descending;
+    }
     return obj;
   },
 
@@ -479,7 +505,7 @@ export const Entry = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
@@ -489,7 +515,7 @@ export const Entry = {
           }
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -510,11 +536,14 @@ export const Entry = {
 
   toJSON(message: Entry): unknown {
     const obj: any = {};
-    obj.data = {};
     if (message.data) {
-      Object.entries(message.data).forEach(([k, v]) => {
-        obj.data[k] = v;
-      });
+      const entries = Object.entries(message.data);
+      if (entries.length > 0) {
+        obj.data = {};
+        entries.forEach(([k, v]) => {
+          obj.data[k] = v;
+        });
+      }
     }
     return obj;
   },
@@ -558,21 +587,21 @@ export const Entry_DataEntry = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.key = reader.string();
           continue;
         case 2:
-          if (tag != 18) {
+          if (tag !== 18) {
             break;
           }
 
           message.value = reader.string();
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -586,8 +615,12 @@ export const Entry_DataEntry = {
 
   toJSON(message: Entry_DataEntry): unknown {
     const obj: any = {};
-    message.key !== undefined && (obj.key = message.key);
-    message.value !== undefined && (obj.value = message.value);
+    if (message.key !== "") {
+      obj.key = message.key;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
     return obj;
   },
 
@@ -623,14 +656,14 @@ export const GetEntryResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.result = Entry.decode(reader, reader.uint32());
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -644,7 +677,9 @@ export const GetEntryResponse = {
 
   toJSON(message: GetEntryResponse): unknown {
     const obj: any = {};
-    message.result !== undefined && (obj.result = message.result ? Entry.toJSON(message.result) : undefined);
+    if (message.result !== undefined) {
+      obj.result = Entry.toJSON(message.result);
+    }
     return obj;
   },
 
@@ -690,35 +725,35 @@ export const GetEntryListResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          if (tag != 10) {
+          if (tag !== 10) {
             break;
           }
 
           message.result.push(Entry.decode(reader, reader.uint32()));
           continue;
         case 2:
-          if (tag != 16) {
+          if (tag !== 16) {
             break;
           }
 
           message.limit = longToNumber(reader.int64() as Long);
           continue;
         case 3:
-          if (tag != 24) {
+          if (tag !== 24) {
             break;
           }
 
           message.page = longToNumber(reader.int64() as Long);
           continue;
         case 4:
-          if (tag != 32) {
+          if (tag !== 32) {
             break;
           }
 
           message.total = longToNumber(reader.int64() as Long);
           continue;
       }
-      if ((tag & 7) == 4 || tag == 0) {
+      if ((tag & 7) === 4 || tag === 0) {
         break;
       }
       reader.skipType(tag & 7);
@@ -737,14 +772,18 @@ export const GetEntryListResponse = {
 
   toJSON(message: GetEntryListResponse): unknown {
     const obj: any = {};
-    if (message.result) {
-      obj.result = message.result.map((e) => e ? Entry.toJSON(e) : undefined);
-    } else {
-      obj.result = [];
+    if (message.result?.length) {
+      obj.result = message.result.map((e) => Entry.toJSON(e));
     }
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.page !== undefined && (obj.page = Math.round(message.page));
-    message.total !== undefined && (obj.total = Math.round(message.total));
+    if (message.limit !== 0) {
+      obj.limit = Math.round(message.limit);
+    }
+    if (message.page !== 0) {
+      obj.page = Math.round(message.page);
+    }
+    if (message.total !== 0) {
+      obj.total = Math.round(message.total);
+    }
     return obj;
   },
 
@@ -762,10 +801,10 @@ export const GetEntryListResponse = {
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
+declare const self: any | undefined;
+declare const window: any | undefined;
+declare const global: any | undefined;
+const tsProtoGlobalThis: any = (() => {
   if (typeof globalThis !== "undefined") {
     return globalThis;
   }
