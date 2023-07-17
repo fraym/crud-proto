@@ -1,3 +1,7 @@
+# v1.0.0
+
+- (feature) Add wait condition to get entry rpc
+
 # v1.0.0-alpha.17
 
 - (bug) Fix naming clash with projections

@@ -8,6 +8,7 @@ message GetEntryRequest {
 	string id = 3;
 	EntryFilter filter = 4;
 	bool returnEmptyDataIfNotFound = 5;
+	EntryWait wait = 6;
 }
 
 message GetEntryListRequest {
@@ -19,6 +20,10 @@ message GetEntryListRequest {
 	repeated EntryOrder order = 8;
 }
 
+message EntryWait {
+	EntryFilter conditionFilter = 1;
+	int64 timeout = 2;
+}
 
 message EntryOrder {
 	string field = 1;

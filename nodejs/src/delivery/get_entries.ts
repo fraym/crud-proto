@@ -11,6 +11,7 @@ export interface GetEntryRequest {
   id: string;
   filter: EntryFilter | undefined;
   returnEmptyDataIfNotFound: boolean;
+  wait: EntryWait | undefined;
 }
 
 export interface GetEntryListRequest {
@@ -20,6 +21,11 @@ export interface GetEntryListRequest {
   page: number;
   filter: EntryFilter | undefined;
   order: EntryOrder[];
+}
+
+export interface EntryWait {
+  conditionFilter: EntryFilter | undefined;
+  timeout: number;
 }
 
 export interface EntryOrder {
@@ -48,7 +54,7 @@ export interface GetEntryListResponse {
 }
 
 function createBaseGetEntryRequest(): GetEntryRequest {
-  return { type: "", auth: undefined, id: "", filter: undefined, returnEmptyDataIfNotFound: false };
+  return { type: "", auth: undefined, id: "", filter: undefined, returnEmptyDataIfNotFound: false, wait: undefined };
 }
 
 export const GetEntryRequest = {
@@ -67,6 +73,9 @@ export const GetEntryRequest = {
     }
     if (message.returnEmptyDataIfNotFound === true) {
       writer.uint32(40).bool(message.returnEmptyDataIfNotFound);
+    }
+    if (message.wait !== undefined) {
+      EntryWait.encode(message.wait, writer.uint32(50).fork()).ldelim();
     }
     return writer;
   },
@@ -113,6 +122,13 @@ export const GetEntryRequest = {
 
           message.returnEmptyDataIfNotFound = reader.bool();
           continue;
+        case 6:
+          if (tag != 50) {
+            break;
+          }
+
+          message.wait = EntryWait.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) == 4 || tag == 0) {
         break;
@@ -131,6 +147,7 @@ export const GetEntryRequest = {
       returnEmptyDataIfNotFound: isSet(object.returnEmptyDataIfNotFound)
         ? Boolean(object.returnEmptyDataIfNotFound)
         : false,
+      wait: isSet(object.wait) ? EntryWait.fromJSON(object.wait) : undefined,
     };
   },
 
@@ -142,6 +159,7 @@ export const GetEntryRequest = {
     message.filter !== undefined && (obj.filter = message.filter ? EntryFilter.toJSON(message.filter) : undefined);
     message.returnEmptyDataIfNotFound !== undefined &&
       (obj.returnEmptyDataIfNotFound = message.returnEmptyDataIfNotFound);
+    message.wait !== undefined && (obj.wait = message.wait ? EntryWait.toJSON(message.wait) : undefined);
     return obj;
   },
 
@@ -160,6 +178,7 @@ export const GetEntryRequest = {
       ? EntryFilter.fromPartial(object.filter)
       : undefined;
     message.returnEmptyDataIfNotFound = object.returnEmptyDataIfNotFound ?? false;
+    message.wait = (object.wait !== undefined && object.wait !== null) ? EntryWait.fromPartial(object.wait) : undefined;
     return message;
   },
 };
@@ -291,6 +310,80 @@ export const GetEntryListRequest = {
       ? EntryFilter.fromPartial(object.filter)
       : undefined;
     message.order = object.order?.map((e) => EntryOrder.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseEntryWait(): EntryWait {
+  return { conditionFilter: undefined, timeout: 0 };
+}
+
+export const EntryWait = {
+  encode(message: EntryWait, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.conditionFilter !== undefined) {
+      EntryFilter.encode(message.conditionFilter, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.timeout !== 0) {
+      writer.uint32(16).int64(message.timeout);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): EntryWait {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseEntryWait();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.conditionFilter = EntryFilter.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag != 16) {
+            break;
+          }
+
+          message.timeout = longToNumber(reader.int64() as Long);
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): EntryWait {
+    return {
+      conditionFilter: isSet(object.conditionFilter) ? EntryFilter.fromJSON(object.conditionFilter) : undefined,
+      timeout: isSet(object.timeout) ? Number(object.timeout) : 0,
+    };
+  },
+
+  toJSON(message: EntryWait): unknown {
+    const obj: any = {};
+    message.conditionFilter !== undefined &&
+      (obj.conditionFilter = message.conditionFilter ? EntryFilter.toJSON(message.conditionFilter) : undefined);
+    message.timeout !== undefined && (obj.timeout = Math.round(message.timeout));
+    return obj;
+  },
+
+  create(base?: DeepPartial<EntryWait>): EntryWait {
+    return EntryWait.fromPartial(base ?? {});
+  },
+
+  fromPartial(object: DeepPartial<EntryWait>): EntryWait {
+    const message = createBaseEntryWait();
+    message.conditionFilter = (object.conditionFilter !== undefined && object.conditionFilter !== null)
+      ? EntryFilter.fromPartial(object.conditionFilter)
+      : undefined;
+    message.timeout = object.timeout ?? 0;
     return message;
   },
 };

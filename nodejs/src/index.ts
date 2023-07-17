@@ -13,6 +13,7 @@ export {
     GetEntryListRequest,
     GetEntryListResponse,
     EntryOrder,
+    EntryWait,
 } from "./delivery/get_entries";
 
 export {
